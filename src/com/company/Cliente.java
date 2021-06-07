@@ -13,8 +13,8 @@ public class Cliente extends Usuario{
     public Cliente() {
     }
 
-    public Cliente(String nombre, String apellido, BigInteger dni, String usuario, String contraseña, ArrayList<Carrito> historialCompras, int idUsuario, String mailUsuario, String localidadUsuario, Boolean isActivo) {
-        super(nombre, apellido, dni, usuario, contraseña);
+    public Cliente(String nombre, String apellido, BigInteger dni, String usuario, String contrasena, ArrayList<Carrito> historialCompras, int idUsuario, String mailUsuario, String localidadUsuario, Boolean isActivo) {
+        super(nombre, apellido, dni, usuario, contrasena);
         this.historialCompras = historialCompras;
         this.idCliente = idUsuario;
         this.mailUsuario = mailUsuario;

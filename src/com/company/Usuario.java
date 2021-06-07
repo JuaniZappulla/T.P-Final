@@ -7,18 +7,18 @@ public abstract class Usuario {
     private String apellido;
     private BigInteger dni;
     private String usuario;
-    private String contraseña;
+    private String contrasena;
 
 
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellido, BigInteger dni, String usuario, String contraseña) {
+    public Usuario(String nombre, String apellido, BigInteger dni, String usuario, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.usuario = usuario;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }
 
     public String getNombre() {
@@ -53,12 +53,12 @@ public abstract class Usuario {
         this.usuario = usuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     @Override
