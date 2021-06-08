@@ -3,10 +3,6 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.sun.tools.javac.util.List;
-
-
-
 public class Carrito<T> extends Compra {
  
  private int idCarrito;
@@ -109,8 +105,7 @@ private ArrayList<T>lista;
  private boolean estaPago(T unProducto)
  {
 	 boolean pagado=false;
-	 if(unProducto.)
-	 
+
 	 return pagado;
  }
 }
