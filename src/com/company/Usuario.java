@@ -63,8 +63,10 @@ public abstract class Usuario {
 
     @Override
     public String toString() {
-        return "nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", dni=" + dni;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nombre: " + nombre + "\n");
+        sb.append("Apellido: " + apellido + "\n");
+        sb.append("Dni: " + dni + "\n");
+        return sb.toString();
     }
 }

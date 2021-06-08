@@ -5,20 +5,22 @@ import java.util.ArrayList;
 
 public class Cliente extends Usuario{
     private ArrayList<Carrito> historialCompras;
-    private int idCliente;
-    private String mailUsuario;
-    private String localidadUsuario;
-    private Boolean isActivo;
+    private String mailCliente;
+    private String localidadCliente;
+    private boolean isActivo;
+    private static int idCliente = 1;
 
     public Cliente() {
+        setIdCliente(idCliente);
+        idCliente++;
     }
 
-    public Cliente(String nombre, String apellido, BigInteger dni, String usuario, String contrasena, ArrayList<Carrito> historialCompras, int idUsuario, String mailUsuario, String localidadUsuario, Boolean isActivo) {
+    public Cliente(String nombre, String apellido, BigInteger dni, String usuario, String contrasena, ArrayList<Carrito> historialCompras, String mailCliente, String localidadCliente, Boolean isActivo) {
         super(nombre, apellido, dni, usuario, contrasena);
         this.historialCompras = historialCompras;
-        this.idCliente = idUsuario;
-        this.mailUsuario = mailUsuario;
-        this.localidadUsuario = localidadUsuario;
+        setIdCliente(idCliente);
+        this.mailCliente = mailCliente;
+        this.localidadCliente = localidadCliente;
         this.isActivo = isActivo;
     }
 
@@ -30,28 +32,28 @@ public class Cliente extends Usuario{
         this.historialCompras = historialCompras;
     }
 
-    public int getIdUsuario() {
+    public int getIdCliente() {
         return idCliente;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdCliente(int idUsuario) {
         this.idCliente = idUsuario;
     }
 
-    public String getMailUsuario() {
-        return mailUsuario;
+    public String getMailCliente() {
+        return mailCliente;
     }
 
     public void setMailUsuario(String mailUsuario) {
-        this.mailUsuario = mailUsuario;
+        this.mailCliente = mailUsuario;
     }
 
-    public String getLocalidadUsuario() {
-        return localidadUsuario;
+    public String getLocalidadCliente() {
+        return localidadCliente;
     }
 
-    public void setLocalidadUsuario(String localidadUsuario) {
-        this.localidadUsuario = localidadUsuario;
+    public void setLocalidadCliente(String localidadUsuario) {
+        this.localidadCliente = localidadUsuario;
     }
 
     public Boolean getActivo() {
@@ -77,4 +79,14 @@ public class Cliente extends Usuario{
         return nuevaCompra();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+        sb.append("E-Mail: " + mailCliente + "\n");
+        sb.append("Localidad: " + localidadCliente + "\n");
+        sb.append("Usuario: " + getUsuario() + "\n");
+        sb.append("Contraseña: " + getContrasena());
+        return sb.toString();
+    }
 }
