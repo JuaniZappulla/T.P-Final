@@ -1,9 +1,104 @@
 package com.company;
 
-public class Compra {
+import java.util.ArrayList;
+
+public class Compra extends Producto{
 	private String producto;
 	private int cantidad;
 	private double precioTotal;
+
+
+
+
+	private ArrayList<Producto> listaCompras;
+
+
+	public Compra() {
+		listaCompras= new ArrayList<Producto>();
+	}
+
+
+
+
+
+	/**
+	 * @param producto
+	 * @param cantidad
+	 * @param precioTotal
+	 * @param listaCompras
+	 */
+	public Compra(String producto, int cantidad, double precioTotal, ArrayList<Producto> listaCompras) {
+		super();
+		this.producto = producto;
+		this.cantidad = cantidad;
+		this.precioTotal = precioTotal;
+		this.listaCompras = listaCompras;
+	}
+
+
+
+
+
+
+	///busco por id el producto comprado
+	public int buscarPorId(int idProducto)
+	{
+
+		int i=0;
+		int flag=-1;
+		while(i<listaCompras.size()&& flag==-1)
+		{
+
+			Producto unProducto= listaCompras.get(i);
+
+			if(unProducto.getIdProducto()==idProducto)
+			{
+
+				flag=i;
+
+			}
+			else
+			{
+				i++;
+			}
+		}
+
+
+		return flag;
+	}
+
+
+
+
+
+	///puedo agregar un producto a la compra
+	public void agregarCompra(Producto produc)
+	{
+		listaCompras.add(produc);
+	}
+
+
+
+
+
+	///eliminar un producto que se agrego a la compra por error
+	public int  eliminar(int idProducto)
+	{
+		int flag=-1;
+		int borrar=0;
+		borrar= buscarPorId(idProducto);
+		if(borrar==1)
+		{
+			listaCompras.remove(borrar);
+			flag=1;
+		}
+		return flag;
+	}
+
+
+
+
+
 	/**
 	 * @return the producto
 	 */
@@ -40,13 +135,33 @@ public class Compra {
 	public void setPrecioTotal(double precioTotal) {
 		this.precioTotal = precioTotal;
 	}
+
+
 	@Override
 	public String toString() {
-		return "Compra [getProducto()=" + getProducto() + ", getCantidad()=" + getCantidad() + ", getPrecioTotal()="
+		return super.toString()+"Compra [getProducto()=" + getProducto() + ", getCantidad()=" + getCantidad() + ", getPrecioTotal()="
 				+ getPrecioTotal() + "]";
 	}
-	
-	
-	
-	
+
+	///Precio del total
+
+	public double precioTotal(int idProducto,int cantidad)
+	{
+		double precioAPagar=0;
+		double precio=0;
+
+		precio=buscarPorId(idProducto);
+
+		if(precio!=-1)
+		{
+			precioAPagar= precio * cantidad;
+
+		}
+
+		return precioAPagar;//si retorna 0, el producto el id es incorrecto;
+	}
+
+
+
+
 }
