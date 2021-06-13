@@ -19,6 +19,7 @@ public class Supermercado {
         usuarios.add(usuario);
     }
 
+
     public String getNombreSupermercado() {
         return nombreSupermercado;
     }
@@ -63,5 +64,34 @@ public class Supermercado {
             }
         }
         return flag;
+    }
+
+    public String getUsuarios() {
+        StringBuilder sb = new StringBuilder();
+        for (Usuario usuario : usuarios){
+            if (usuario instanceof Admin){
+                sb.append("[");
+                sb.append("Nombre: " + usuario.getNombre() + ", ");
+                sb.append("Apellido: " + usuario.getApellido() + ", ");
+                sb.append("DNI: " + usuario.getDni() + ", ");
+                sb.append("Usuario: " + usuario.getUsuario() + ", ");
+                sb.append("Contraseña: " + usuario.getContrasena() + ", ");
+                sb.append("Cargo: " + ((Admin) usuario).getCargo());
+                sb.append("]" + "\n");
+            }
+            else if (usuario instanceof Cliente){
+                sb.append("[");
+                sb.append("Nombre: " + usuario.getNombre() + ", ");
+                sb.append("Apellido: " + usuario.getApellido() + ", ");
+                sb.append("DNI: " + usuario.getDni() + ", ");
+                sb.append("Usuario: " + usuario.getUsuario() + ", ");
+                sb.append("Contraseña: " + usuario.getContrasena() + ", ");
+                sb.append("E-Mail: " + ((Cliente) usuario).getMailCliente() + ", ");
+                sb.append("Localidad: " + ((Cliente) usuario).getLocalidadCliente() + ", ");
+                sb.append("Categoria: " + ((Cliente) usuario).getCategoria());
+                sb.append("]" + "\n");
+            }
+        }
+        return sb.toString();
     }
 }

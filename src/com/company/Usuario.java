@@ -1,11 +1,12 @@
 package com.company;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
     private String nombre;
     private String apellido;
-    private BigInteger dni;
+    private String dni;
     private String usuario;
     private String contrasena;
 
@@ -13,7 +14,7 @@ public abstract class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellido, BigInteger dni, String usuario, String contrasena) {
+    public Usuario(String nombre, String apellido, String dni, String usuario, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -37,11 +38,11 @@ public abstract class Usuario {
         this.apellido = apellido;
     }
 
-    public BigInteger getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(BigInteger dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
@@ -69,4 +70,5 @@ public abstract class Usuario {
         sb.append("Dni: " + dni + "\n");
         return sb.toString();
     }
+
 }

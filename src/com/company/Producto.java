@@ -31,10 +31,6 @@ public class Producto {
         this.comentario = comentario;
     }
 
-
-
-
-
     /**
      * @return the idProducto
      */

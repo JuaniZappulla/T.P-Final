@@ -1,18 +1,26 @@
 package com.company;
 
+import com.google.gson.*;
+
+import java.io.*;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
 
 public class Main {
+
     public static Scanner scanner;
-    public static void main(String[] args) {
+
+    public static void main(String[] args){
+
         Supermercado superMerca = new Supermercado("LaSuperMerca");
         scanner = new Scanner(System.in);
+        cargarAdmins(superMerca);
         Usuario usr = Login(superMerca);
+        System.out.println(superMerca.getUsuarios());
 
-        System.out.println(usr.toString());
     }
 
-    public static Usuario Login (Supermercado mercado){
+    public static Usuario Login (Supermercado mercado) {
         String usuario, contrasena;
         char opc;
         Usuario usr;
@@ -22,7 +30,7 @@ public class Main {
         System.out.println("Contraseña");
         contrasena = scanner.nextLine();
         usr = mercado.buscarUsuario(usuario, contrasena);
-        if (usr != null){
+        if (usr != null) {
             System.out.println("Logeado con exito!");
             System.out.println("Bienvenido " + usr.getNombre());
         }
@@ -52,9 +60,8 @@ public class Main {
         System.out.println("Apellido: ");
         cliente.setApellido(scanner.nextLine());
         System.out.println("DNI");
-        cliente.setDni(scanner.nextBigInteger());
+        cliente.setDni(scanner.nextLine());
         do{
-            scanner.nextLine();
             System.out.println("E-Mail");
             cliente.setMailUsuario(scanner.nextLine());
             if (cliente.getMailCliente().contains("@")){
@@ -65,6 +72,8 @@ public class Main {
         }while (!flag);
         System.out.println("Localidad: ");
         cliente.setLocalidadCliente(scanner.nextLine());
+        System.out.println("Categoria: ");
+        cliente.setCategoria(scanner.nextLine());
         do{
             System.out.println("Nombre de usuario: ");
             usuario = scanner.nextLine();
@@ -80,5 +89,39 @@ public class Main {
         cliente.setActivo(true);
         return cliente;
     }
+
+    public static void cargarAdmins (Supermercado mercado){
+        Usuario admin1 = new Admin("Juan Ignacio", "Zappulla", "41928220", "juani99", "8914122", "Jefe");
+        mercado.nuevoUsuario(admin1);
+    }
+
+    public static void grabar (LinkedHashSet<Cliente> clientes){
+        File file = new File ("clientes.json");
+        try {
+            BufferedWriter escritura = new BufferedWriter(new FileWriter(file));
+            for (Cliente cliente : clientes){
+                Gson gson = new Gson();
+                gson.toJson(cliente, Cliente.class, escritura);
+                escritura.flush();
+                escritura.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void leer (File file){
+        try {
+            Usuario usr = new Cliente();
+            BufferedReader lectura = new BufferedReader(new FileReader(file));
+            Gson gson = new Gson();
+            usr = gson.fromJson(lectura, Cliente.class);
+            System.out.println(usr.toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

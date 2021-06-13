@@ -1,27 +1,30 @@
 package com.company;
 
-import java.math.BigInteger;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cliente extends Usuario{
+public class Cliente extends Usuario implements Serializable, ICategoria {
+
     private ArrayList<Carrito> historialCompras;
     private String mailCliente;
     private String localidadCliente;
     private boolean isActivo;
     private static int idCliente = 1;
+    private String categoria;
 
     public Cliente() {
         setIdCliente(idCliente);
         idCliente++;
     }
 
-    public Cliente(String nombre, String apellido, BigInteger dni, String usuario, String contrasena, ArrayList<Carrito> historialCompras, String mailCliente, String localidadCliente, Boolean isActivo) {
+    public Cliente(String nombre, String apellido, String dni, String usuario, String contrasena, String mailCliente, String localidadCliente, Boolean isActivo, String categoria) {
         super(nombre, apellido, dni, usuario, contrasena);
-        this.historialCompras = historialCompras;
+        historialCompras = new ArrayList<>();
         setIdCliente(idCliente);
         this.mailCliente = mailCliente;
         this.localidadCliente = localidadCliente;
         this.isActivo = isActivo;
+        setCategoria(categoria);
     }
 
     public ArrayList<Carrito> getHistorialCompras() {
@@ -80,13 +83,26 @@ public class Cliente extends Usuario{
     }
 
     @Override
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+
+    public String getCategoria(){
+        return categoria;
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
         sb.append("E-Mail: " + mailCliente + "\n");
         sb.append("Localidad: " + localidadCliente + "\n");
+        sb.append("Categoria: " + getCategoria() + "\n");
         sb.append("Usuario: " + getUsuario() + "\n");
-        sb.append("Contraseña: " + getContrasena());
+        sb.append("Contraseña: " + getContrasena() + "\n");
+
         return sb.toString();
     }
+
 }
