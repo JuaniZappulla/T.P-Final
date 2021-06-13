@@ -4,45 +4,36 @@ import Interface.ICategoria;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Cliente extends Usuario implements Serializable, ICategoria {
 
-    private ArrayList<Carrito> historialCompras;
+    private HashMap<Integer, Carrito> historialCompras;
     private String mailCliente;
     private String localidadCliente;
     private boolean isActivo;
-    private static int idCliente = 1;
     private String categoria;
 
     public Cliente() {
-        setIdCliente(idCliente);
-        idCliente++;
+        setId(getId());
     }
 
     public Cliente(String nombre, String apellido, String dni, String usuario, String contrasena, String mailCliente, String localidadCliente, Boolean isActivo, String categoria) {
         super(nombre, apellido, dni, usuario, contrasena);
-        historialCompras = new ArrayList<>();
-        setIdCliente(idCliente);
+        historialCompras = new HashMap<>();
+        setId(getId());
         this.mailCliente = mailCliente;
         this.localidadCliente = localidadCliente;
         this.isActivo = isActivo;
         setCategoria(categoria);
     }
 
-    public ArrayList<Carrito> getHistorialCompras() {
+    public HashMap<Integer, Carrito> getHistorialCompras() {
         return historialCompras;
     }
 
-    public void setHistorialCompras(ArrayList<Carrito> historialCompras) {
+    public void setHistorialCompras(HashMap<Integer, Carrito> historialCompras) {
         this.historialCompras = historialCompras;
-    }
-
-    public int getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(int idUsuario) {
-        this.idCliente = idUsuario;
     }
 
     public String getMailCliente() {
@@ -67,15 +58,6 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
 
     public void setActivo(Boolean activo) {
         isActivo = activo;
-    }
-
-    public String verHistorialDeCompras (){
-        StringBuilder sb = new StringBuilder();
-        for (Carrito carrito : historialCompras){
-            sb.append(carrito.toString());
-            sb.append("\n");
-        }
-        return sb.toString();
     }
 
     public Compra nuevaCompra (){

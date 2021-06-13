@@ -8,9 +8,11 @@ public abstract class Usuario implements Serializable {
     private String dni;
     private String usuario;
     private String contrasena;
-
+    private static int id = 0;
 
     public Usuario() {
+        setId(id);
+        id++;
     }
 
     public Usuario(String nombre, String apellido, String dni, String usuario, String contrasena) {
@@ -19,6 +21,16 @@ public abstract class Usuario implements Serializable {
         this.dni = dni;
         this.usuario = usuario;
         this.contrasena = contrasena;
+        setId(id);
+        id++;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        Usuario.id = id;
     }
 
     public String getNombre() {

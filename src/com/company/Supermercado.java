@@ -1,22 +1,33 @@
 package com.company;
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 public class Supermercado {
     private String nombreSupermercado;
     private LinkedHashSet<Usuario> usuarios;
-    private HashMap<Integer,Producto> listadoProductos;
+    private ArrayList<Producto> listadoProductos;
 
     public Supermercado(String nombreSupermercado) {
         this.nombreSupermercado = nombreSupermercado;
         usuarios = new LinkedHashSet<>();
-        listadoProductos = new HashMap<>();
+        listadoProductos = new ArrayList<>();
     }
 
     public void nuevoUsuario (Usuario usuario){
         usuarios.add(usuario);
+    }
+
+    public void nuevoProducto (Producto producto){
+        listadoProductos.add(producto);
+    }
+
+    public ArrayList<Producto> getListadoProductos() {
+        return listadoProductos;
+    }
+
+    public void setListadoProductos(ArrayList<Producto> listadoProductos) {
+        this.listadoProductos = listadoProductos;
     }
 
     public LinkedHashSet<Usuario> getUsuarios() {
@@ -77,8 +88,7 @@ public class Supermercado {
         StringBuilder sb = new StringBuilder();
         for (Usuario usuario : usuarios){
             if (usuario instanceof Admin){
-                sb.append("[");
-                sb.append("Nombre: " + usuario.getNombre() + ", ");
+                sb.append("[Nombre: " + usuario.getNombre() + ", ");
                 sb.append("Apellido: " + usuario.getApellido() + ", ");
                 sb.append("DNI: " + usuario.getDni() + ", ");
                 sb.append("Usuario: " + usuario.getUsuario() + ", ");
@@ -87,8 +97,7 @@ public class Supermercado {
                 sb.append("]" + "\n");
             }
             else if (usuario instanceof Cliente){
-                sb.append("[");
-                sb.append("Nombre: " + usuario.getNombre() + ", ");
+                sb.append("[Nombre: " + usuario.getNombre() + ", ");
                 sb.append("Apellido: " + usuario.getApellido() + ", ");
                 sb.append("DNI: " + usuario.getDni() + ", ");
                 sb.append("Usuario: " + usuario.getUsuario() + ", ");
@@ -101,4 +110,22 @@ public class Supermercado {
         }
         return sb.toString();
     }
+
+    public String muestraProductos (){
+        StringBuilder sb = new StringBuilder();
+        for (Producto producto : listadoProductos){
+
+        }
+
+        return sb.toString();
+    }
+
+    public String muestraProductosPorCategoria (String categoria){
+        StringBuilder sb = new StringBuilder();
+        for (Producto producto : listadoProductos){
+
+        }
+        return sb.toString();
+    }
+
 }

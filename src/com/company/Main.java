@@ -1,9 +1,6 @@
 package com.company;
 
-import com.google.gson.*;
-import java.io.*;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
+import exceptions.CargaProductoException;
 import java.util.Scanner;
 
 public class Main {
@@ -11,13 +8,48 @@ public class Main {
     public static Scanner scanner;
 
     public static void main(String[] args){
-        File file = new File ("clientes.json");
+        lecturaEscritura lye = new lecturaEscritura();
+        int opc = 0;
         Supermercado superMerca = new Supermercado("LaSuperMerca");
-        leer(file.getPath(), superMerca);
+        lye.leeClientes(superMerca);
+        superMerca.setListadoProductos(lye.leeProductos());
         scanner = new Scanner(System.in);
         cargarAdmins(superMerca);
         Usuario usr = Login(superMerca);
-        grabar(file.getPath(), superMerca.getUsuarios(), superMerca);
+        if (usr instanceof Admin){
+            do{
+                menuAdmin();
+                opc = scanner.nextInt();
+                scanner.nextLine();
+                switch (opc){
+                    case 1:
+                        try{
+                            nuevoProducto(superMerca);
+                        }catch(CargaProductoException e){
+                            e.getMessage();
+                        }
+                        break;
+                    case 2:
+                        System.out.println(superMerca.muestraProductos());
+                        break;
+                    case 3:
+                        muestraPorCategoria(superMerca);
+                        break;
+                }
+            }while (opc != 0);
+
+        }
+        lye.grabaClientes(superMerca.getUsuarios(), superMerca);
+        lye.grabaProductos(superMerca.getListadoProductos(), superMerca);
+    }
+
+    public static void menuAdmin (){
+        System.out.println("MENU ADMINISTRADOR: ");
+        System.out.println("1. AGREGA PRODUCTO");
+        System.out.println("2. VER LISTA PRODUCTOS ");
+        System.out.println("3. VER LISTA PRODUCTOS POR CATEGORIA");
+        System.out.println("0. SALIR");
+        System.out.println("SELECCIONE UNA OPCION: ");
     }
 
     public static Usuario Login (Supermercado mercado) {
@@ -95,36 +127,30 @@ public class Main {
         mercado.nuevoUsuario(admin1);
     }
 
-    public static void grabar (String file, LinkedHashSet<Usuario> clientes, Supermercado mercado){
-        LinkedHashSet<Cliente> clientesAux = new LinkedHashSet<>();
-        try {
-            BufferedWriter escritura = new BufferedWriter(new FileWriter(file));
-            Gson gson = new Gson();
-            for (Usuario usuarioAux : clientes){
-                if (usuarioAux instanceof Cliente){
-                    clientesAux.add((Cliente) usuarioAux);
-                }
-            }
-            gson.toJson(clientesAux, LinkedHashSet.class, escritura);
-            escritura.flush();
-            escritura.newLine();
-            escritura.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void nuevoProducto (Supermercado mercado) {
+        Producto producto = new Producto();
+        System.out.println("Nombre del producto: ");
+        producto.setNombreProducto(scanner.nextLine());
+        System.out.println("Marca del producto: ");
+        producto.setMarcaProducto(scanner.nextLine());
+        System.out.println("Precio del producto: ");
+        producto.setPrecioProducto(scanner.nextDouble());
+        System.out.println("Stock Actual del producto: ");
+        producto.setStockProducto(scanner.nextInt());
+        scanner.nextLine();
+        System.out.println("Comentario: ");
+        producto.setComentario(scanner.nextLine());
+        System.out.println("Categoria: ");
+        producto.setCategoria(scanner.nextLine());
+        mercado.nuevoProducto(producto);
     }
 
-    public static void leer (String file, Supermercado mercado){
-        try {
-            BufferedReader lectura = new BufferedReader(new FileReader(file));
-            Gson gson = new Gson();
-            Cliente[] clientes = gson.fromJson(lectura, Cliente[].class);
-            LinkedHashSet<Cliente> usuarios = new LinkedHashSet<>(Arrays.asList(clientes));
-            for (Cliente usuario2 : usuarios){
-                mercado.nuevoUsuario(usuario2);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public static void muestraPorCategoria(Supermercado mercado){
+        String categoria = "prueba";
+        System.out.println("INGRESE CATEGORIA: ");
+        categoria = scanner.nextLine();
+        mercado.muestraProductosPorCategoria("categoria");
     }
+
+
 }

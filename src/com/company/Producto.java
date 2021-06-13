@@ -3,7 +3,7 @@ package com.company;
 import Interface.ICategoria;
 
 public class Producto implements ICategoria {
-    private int idProducto;
+    private static int idProducto = 0;
     private String nombreProducto;
     private double precioProducto;
     private int stockProducto;
@@ -12,7 +12,8 @@ public class Producto implements ICategoria {
     private String categoria;
 
     public Producto() {
-        // TODO Auto-generated constructor stub
+        setIdProducto(idProducto);
+        idProducto++;
     }
 
     /**
@@ -25,7 +26,8 @@ public class Producto implements ICategoria {
      */
     public Producto(int idProducto, String nombreProducto, double precioProducto, int stockProducto,
                     String marcaProducto, String comentario, String categoria) {
-        this.idProducto = idProducto;
+        setIdProducto(idProducto);
+        idProducto++;
         this.nombreProducto = nombreProducto;
         this.precioProducto = precioProducto;
         this.stockProducto = stockProducto;
@@ -114,5 +116,17 @@ public class Producto implements ICategoria {
 
     public String getCategoria (){
         return categoria;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[Nombre: " + getNombreProducto() + ", ");
+        sb.append("Marca: " + getMarcaProducto() + ", ");
+        sb.append("Precio:$ " + getPrecioProducto() + ", ");
+        sb.append("Stock: " + getStockProducto() + ", ");
+        sb.append("Comentario: " + getComentario());
+        sb.append("]" + "\n");
+        return sb.toString();
     }
 }
