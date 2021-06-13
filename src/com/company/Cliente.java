@@ -1,5 +1,7 @@
 package com.company;
 
+import Interface.ICategoria;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

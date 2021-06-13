@@ -1,8 +1,8 @@
 package com.company;
 
 import com.google.gson.*;
-
 import java.io.*;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
 
@@ -11,13 +11,13 @@ public class Main {
     public static Scanner scanner;
 
     public static void main(String[] args){
-
+        File file = new File ("clientes.json");
         Supermercado superMerca = new Supermercado("LaSuperMerca");
+        leer(file.getPath(), superMerca);
         scanner = new Scanner(System.in);
         cargarAdmins(superMerca);
         Usuario usr = Login(superMerca);
-        System.out.println(superMerca.getUsuarios());
-
+        grabar(file.getPath(), superMerca.getUsuarios(), superMerca);
     }
 
     public static Usuario Login (Supermercado mercado) {
@@ -95,33 +95,36 @@ public class Main {
         mercado.nuevoUsuario(admin1);
     }
 
-    public static void grabar (LinkedHashSet<Cliente> clientes){
-        File file = new File ("clientes.json");
+    public static void grabar (String file, LinkedHashSet<Usuario> clientes, Supermercado mercado){
+        LinkedHashSet<Cliente> clientesAux = new LinkedHashSet<>();
         try {
             BufferedWriter escritura = new BufferedWriter(new FileWriter(file));
-            for (Cliente cliente : clientes){
-                Gson gson = new Gson();
-                gson.toJson(cliente, Cliente.class, escritura);
-                escritura.flush();
-                escritura.close();
+            Gson gson = new Gson();
+            for (Usuario usuarioAux : clientes){
+                if (usuarioAux instanceof Cliente){
+                    clientesAux.add((Cliente) usuarioAux);
+                }
             }
+            gson.toJson(clientesAux, LinkedHashSet.class, escritura);
+            escritura.flush();
+            escritura.newLine();
+            escritura.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void leer (File file){
+    public static void leer (String file, Supermercado mercado){
         try {
-            Usuario usr = new Cliente();
             BufferedReader lectura = new BufferedReader(new FileReader(file));
             Gson gson = new Gson();
-            usr = gson.fromJson(lectura, Cliente.class);
-            System.out.println(usr.toString());
+            Cliente[] clientes = gson.fromJson(lectura, Cliente[].class);
+            LinkedHashSet<Cliente> usuarios = new LinkedHashSet<>(Arrays.asList(clientes));
+            for (Cliente usuario2 : usuarios){
+                mercado.nuevoUsuario(usuario2);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-
-
-
 }

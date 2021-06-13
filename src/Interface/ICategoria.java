@@ -1,4 +1,4 @@
-package com.company;
+package Interface;
 
 public interface ICategoria {
 

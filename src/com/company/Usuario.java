@@ -1,7 +1,6 @@
 package com.company;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 public abstract class Usuario implements Serializable {
     private String nombre;

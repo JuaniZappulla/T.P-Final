@@ -1,12 +1,15 @@
 package com.company;
 
-public class Producto {
+import Interface.ICategoria;
+
+public class Producto implements ICategoria {
     private int idProducto;
     private String nombreProducto;
     private double precioProducto;
     private int stockProducto;
     private String marcaProducto;
     private String comentario;
+    private String categoria;
 
     public Producto() {
         // TODO Auto-generated constructor stub
@@ -21,14 +24,14 @@ public class Producto {
      * @param comentario
      */
     public Producto(int idProducto, String nombreProducto, double precioProducto, int stockProducto,
-                    String marcaProducto, String comentario) {
-        super();
+                    String marcaProducto, String comentario, String categoria) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.precioProducto = precioProducto;
         this.stockProducto = stockProducto;
         this.marcaProducto = marcaProducto;
         this.comentario = comentario;
+        setCategoria(categoria);
     }
 
     /**
@@ -104,4 +107,12 @@ public class Producto {
         this.comentario = comentario;
     }
 
+    @Override
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getCategoria (){
+        return categoria;
+    }
 }

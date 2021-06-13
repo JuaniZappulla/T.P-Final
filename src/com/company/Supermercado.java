@@ -19,6 +19,13 @@ public class Supermercado {
         usuarios.add(usuario);
     }
 
+    public LinkedHashSet<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(LinkedHashSet<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 
     public String getNombreSupermercado() {
         return nombreSupermercado;
@@ -66,7 +73,7 @@ public class Supermercado {
         return flag;
     }
 
-    public String getUsuarios() {
+    public String muestraUsuarios() {
         StringBuilder sb = new StringBuilder();
         for (Usuario usuario : usuarios){
             if (usuario instanceof Admin){

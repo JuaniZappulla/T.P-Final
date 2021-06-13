@@ -1,1 +1,1 @@
-{"nombre":"asd","apellido":"asd","dni":"assd","usuario":"asd","contrasena":"asd"}
+[{"mailCliente":"@gmail.com","localidadCliente":"asd","isActivo":true,"categoria":"asd","nombre":"asd","apellido":"ad","dni":"asd","usuario":"asd","contrasena":"asd"},{"mailCliente":"qwe@gmail.com","localidadCliente":"qwe","isActivo":true,"categoria":"qwe","nombre":"qwe","apellido":"qwe","dni":"qwee","usuario":"qwe","contrasena":"qwe"}]
