@@ -1,8 +1,6 @@
 package com.company;
 
 import exceptions.CargaProductoException;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -10,13 +8,13 @@ public class Main {
     public static Scanner scanner;
 
     public static void main(String[] args){
-        int opc = 0;
         lecturaEscritura lye = new lecturaEscritura();
+        int opc = 0;
         Supermercado superMerca = new Supermercado("LaSuperMerca");
-        superMerca.setUsuarios(lye.leeClientes());
+        lye.leeClientes(superMerca);
         superMerca.setListadoProductos(lye.leeProductos());
-        cargarAdmins(superMerca);
         scanner = new Scanner(System.in);
+        cargarAdmins(superMerca);
         Usuario usr = Login(superMerca);
         if (usr instanceof Admin){
             do{
@@ -37,22 +35,9 @@ public class Main {
                     case 3:
                         muestraPorCategoria(superMerca);
                         break;
-                    case 4:
-                        break;
-                    case 5:
-                        System.out.println(usr);
-                        break;
-                    case 6:
-                        System.out.println(superMerca.muestraUsuarios());
-                        break;
-                    case 7:
-                        buscaUsuario(superMerca);
-                        break;
                 }
             }while (opc != 0);
-        }
-        else if (usr instanceof Cliente){
-            menuCliente();
+
         }
         lye.grabaClientes(superMerca.getUsuarios(), superMerca);
         lye.grabaProductos(superMerca.getListadoProductos(), superMerca);
@@ -61,18 +46,10 @@ public class Main {
     public static void menuAdmin (){
         System.out.println("MENU ADMINISTRADOR: ");
         System.out.println("1. AGREGA PRODUCTO");
-        System.out.println("2. VER LISTA PRODUCTOS");
+        System.out.println("2. VER LISTA PRODUCTOS ");
         System.out.println("3. VER LISTA PRODUCTOS POR CATEGORIA");
-        System.out.println("4. RENOVAR STOCK DE UN PRODUCTO");
-        System.out.println("5. VER USUARIO ADMINISTRADOR");
-        System.out.println("6. VER LISTA CLIENTES");
-        System.out.println("7. BUSCAR CLIENTE");
         System.out.println("0. SALIR");
         System.out.println("SELECCIONE UNA OPCION: ");
-    }
-
-    public static void menuCliente (){
-        System.out.println("En desarrollo...");
     }
 
     public static Usuario Login (Supermercado mercado) {
@@ -132,13 +109,13 @@ public class Main {
         do{
             System.out.println("Nombre de usuario: ");
             usuario = scanner.nextLine();
-            if (mercado.buscarPorNombreUsuarioLogin(usuario)){
+            if (mercado.buscarPorNombreUsuario(usuario)){
                 System.out.println("Error, usuario ya registrado.");
             }
             else{
                 cliente.setUsuario(usuario);
             }
-        }while (mercado.buscarPorNombreUsuarioLogin(usuario));
+        }while (mercado.buscarPorNombreUsuario(usuario));
         System.out.println("contraseña: ");
         cliente.setContrasena(scanner.nextLine());
         cliente.setActivo(true);
@@ -169,24 +146,10 @@ public class Main {
     }
 
     public static void muestraPorCategoria(Supermercado mercado){
-        String categoria;
+        String categoria = "prueba";
         System.out.println("INGRESE CATEGORIA: ");
         categoria = scanner.nextLine();
-        System.out.println(mercado.muestraProductosPorCategoria(categoria));
-    }
-
-    public static void buscaUsuario(Supermercado mercado) {
-        String usuario;
-        System.out.println("INGRESE DNI DE USUARIO: ");
-        usuario = scanner.nextLine();
-        Usuario usr = mercado.buscarUsuario(usuario);
-        if ( usr instanceof Cliente) {
-            System.out.println("Id:" + usr.getId());
-            System.out.println(usr.toString());
-        } else if (usr instanceof Admin) {
-            System.out.println("Id:" + usr.getId());
-            System.out.println(usr.toString());
-        }
+        mercado.muestraProductosPorCategoria("categoria");
     }
 
 

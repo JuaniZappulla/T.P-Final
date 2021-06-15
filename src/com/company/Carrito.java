@@ -52,6 +52,42 @@ private ArrayList<T>lista;
 	public float getDescuento() {
 		return descuento;
 	}
+	
+
+	/**
+	 * @param idCarrito the idCarrito to set
+	 */
+	public void setIdCarrito(int idCarrito) {
+		this.idCarrito = idCarrito;
+	}
+
+	/**
+	 * @param fecha the fecha to set
+	 */
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	/**
+	 * @param tipoPago the tipoPago to set
+	 */
+	public void setTipoPago(String tipoPago) {
+		this.tipoPago = tipoPago;
+	}
+
+	/**
+	 * @param isPago the isPago to set
+	 */
+	public void setPago(boolean isPago) {
+		this.isPago = isPago;
+	}
+
+	/**
+	 * @param descuento the descuento to set
+	 */
+	public void setDescuento(float descuento) {
+		this.descuento = descuento;
+	}
 
 	/**
 	 * @return the unProducto
@@ -70,15 +106,17 @@ private ArrayList<T>lista;
 	/**
 	 * @param unProducto the unProducto to set
 	 */
+	
 	public void setUnProducto(T unProducto) {
 		this.unProducto = unProducto;
 	}
+	///agrega los productos al carrito
  public void agregarCarrito(T unProducto)
  {
 	 lista.add(unProducto);
  }
-//permite mostrar el carrito
- /*
+//permite mostrar el carrito completo
+ 
 	public String mostrarCarrito() 
 		{
 			StringBuilder builder = new StringBuilder();
@@ -86,26 +124,30 @@ private ArrayList<T>lista;
 					builder.append(lista.get(i).toString() + "\n");
 			}
 			return builder.toString();
-		}*/
-	//obtener el total a pagar
+		}
+	//obtener el total a pagar con el descuento
  public double getPrecioTotal()
  {
 	 double total=0;
+	 float aplicarDescuento=0;
 	 
 	 for (int i=0;i< lista.size();i++)
 	 {
 		 
 		 total+= (double)lista.get(i);
+		 
+	 }
+	 if (getTipoPago()=="efectivo")
+	 {
+		 aplicarDescuento=(float)total*getDescuento();
+		 
+	 }
+	 else {
+		 aplicarDescuento=(float)total;
 	 }
 	 
-	 return total;
+	 return aplicarDescuento;
  }
  
-	///comprueba si la compra fue realizada o no
- private boolean estaPago(T unProducto)
- {
-	 boolean pagado=false;
 
-	 return pagado;
- }
 }
