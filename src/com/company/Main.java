@@ -38,6 +38,7 @@ public class Main {
                         muestraPorCategoria(superMerca);
                         break;
                     case 4:
+                        restockearProducto(superMerca);
                         break;
                     case 5:
                         System.out.println(usr);
@@ -189,5 +190,26 @@ public class Main {
         }
     }
 
+    public static void restockearProducto (Supermercado mercado){
+        int idProducto;
+        int cantidad;
+        boolean flag = false;
+        System.out.println("Ingrese id de producto: ");
+        idProducto = scanner.nextInt();
+        flag = mercado.restockBuscaProducto(idProducto);
+        if (!flag){
+            System.out.println("ERROR, ID INCORRECTO O SE DESACTIVÓ EL PRODUCTO");
+        }
+        else{
+            System.out.println("Ingrese cantidad para reestockear");
+            cantidad = scanner.nextInt();
+            flag = mercado.restockProducto(idProducto, cantidad);
+            if(!flag){
+                System.out.println("ERROR, REINTENTE");
+            }else{
+                System.out.println("INGRESO DE STOCK CORRECTO");
+            }
+        }
+    }
 
 }

@@ -27,7 +27,9 @@ public class Supermercado {
     }
 
     public void setListadoProductos(ArrayList<Producto> listadoProductos) {
-        this.listadoProductos = listadoProductos;
+        if(listadoProductos != null){
+            this.listadoProductos = listadoProductos;
+        }
     }
 
     public LinkedHashSet<Usuario> getUsuarios() {
@@ -88,22 +90,10 @@ public class Supermercado {
 
     public String muestraUsuarios() {
         StringBuilder sb = new StringBuilder();
-        for (Usuario usuario : usuarios){
-            sb.append("[Nombre: " + usuario.getNombre() + ", ");
-            sb.append("Apellido: " + usuario.getApellido() + ", ");
-            sb.append("DNI: " + usuario.getDni() + ", ");
-            sb.append("Usuario: " + usuario.getUsuario() + ", ");
-            sb.append("Contraseña: " + usuario.getContrasena() + ", ");
-            if (usuario instanceof Admin){
-                sb.append("Cargo: " + ((Admin) usuario).getCargo());
-                sb.append("]" + "\n");
-            }
-            else if (usuario instanceof Cliente){
-                sb.append("E-Mail: " + ((Cliente) usuario).getMailCliente() + ", ");
-                sb.append("Localidad: " + ((Cliente) usuario).getLocalidadCliente() + ", ");
-                sb.append("Categoria: " + ((Cliente) usuario).getCategoria());
-                sb.append("]" + "\n");
-            }
+        for (Usuario usuario : usuarios) {
+            sb.append("[");
+            sb.append(usuario.toString());
+            sb.append("]" + "\n");
         }
         return sb.toString();
     }
@@ -137,6 +127,30 @@ public class Supermercado {
             }
         }
         return usr;
+    }
+
+    public boolean restockBuscaProducto (int id){
+        boolean flag = false;
+        for (Producto producto : listadoProductos){
+            if (producto.getIdProducto() == id){
+                if (producto.isActivo()){
+                    flag = true;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public boolean restockProducto (int id, int cantidad){
+        boolean flag = false;
+        for (Producto producto : listadoProductos){
+            if(producto.getIdProducto() == id){
+                cantidad += producto.getStockProducto();
+                producto.setStockProducto(cantidad);
+                flag = true;
+            }
+        }
+        return flag;
     }
 
 }

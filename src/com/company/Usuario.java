@@ -8,11 +8,11 @@ public abstract class Usuario implements Serializable {
     private String dni;
     private String usuario;
     private String contrasena;
+    private int idUsuario;
     private static int id = 0;
 
     public Usuario() {
-        setId(id);
-        id++;
+        this.idUsuario = ++id;
     }
 
     public Usuario(String nombre, String apellido, String dni, String usuario, String contrasena) {
@@ -21,8 +21,7 @@ public abstract class Usuario implements Serializable {
         this.dni = dni;
         this.usuario = usuario;
         this.contrasena = contrasena;
-        setId(id);
-        id++;
+        setId(id++);
     }
 
     public int getId() {
@@ -76,9 +75,10 @@ public abstract class Usuario implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Nombre: " + nombre + "\n");
-        sb.append("Apellido: " + apellido + "\n");
-        sb.append("Dni: " + dni + "\n");
+        sb.append("ID: " + idUsuario + ", ");
+        sb.append("Nombre: " + nombre + ", ");
+        sb.append("Apellido: " + apellido + ", ");
+        sb.append("Dni: " + dni + ", ");
         return sb.toString();
     }
 

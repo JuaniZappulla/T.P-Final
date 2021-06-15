@@ -3,17 +3,19 @@ package com.company;
 import Interface.ICategoria;
 
 public class Producto implements ICategoria {
-    private static int idProducto = 0;
+    private static int count = 0;
     private String nombreProducto;
     private double precioProducto;
     private int stockProducto;
     private String marcaProducto;
     private String comentario;
     private String categoria;
+    private int idProducto;
+    private boolean isActivo;
 
     public Producto() {
-        setIdProducto(idProducto);
-        idProducto++;
+        this.idProducto = ++count;
+        isActivo = true;
     }
 
     /**
@@ -24,10 +26,12 @@ public class Producto implements ICategoria {
      * @param marcaProducto
      * @param comentario
      */
+
     public Producto(int idProducto, String nombreProducto, double precioProducto, int stockProducto,
                     String marcaProducto, String comentario, String categoria) {
-        setIdProducto(idProducto);
-        idProducto++;
+
+        setIdProducto(count++);
+        isActivo = true;
         this.nombreProducto = nombreProducto;
         this.precioProducto = precioProducto;
         this.stockProducto = stockProducto;
@@ -118,10 +122,19 @@ public class Producto implements ICategoria {
         return categoria;
     }
 
+    public boolean isActivo() {
+        return isActivo;
+    }
+
+    public void setActivo(boolean activo) {
+        isActivo = activo;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[Nombre: " + getNombreProducto() + ", ");
+        sb.append("[ID: " + getIdProducto() + ", ");
+        sb.append("Nombre: " + getNombreProducto() + ", ");
         sb.append("Marca: " + getMarcaProducto() + ", ");
         sb.append("Precio:$ " + getPrecioProducto() + ", ");
         sb.append("Stock: " + getStockProducto() + ", ");

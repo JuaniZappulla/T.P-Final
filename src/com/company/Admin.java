@@ -29,7 +29,7 @@ public class Admin extends Usuario implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
-        sb.append("Cargo: " + cargo + "\n");
+        sb.append("Cargo: " + cargo);
 
         return sb.toString();
     }

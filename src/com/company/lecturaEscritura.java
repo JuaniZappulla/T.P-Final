@@ -49,7 +49,7 @@ public class lecturaEscritura {
         try {
             BufferedWriter escritura = new BufferedWriter(new FileWriter(fileProduct));
             Gson gson = new Gson();
-            gson.toJson(listadoProductos, List.class, escritura);
+            gson.toJson(listadoProductos, ArrayList.class, escritura);
             escritura.flush();
             escritura.newLine();
             escritura.close();

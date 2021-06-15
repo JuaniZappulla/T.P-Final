@@ -3,7 +3,6 @@ package com.company;
 import Interface.ICategoria;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Cliente extends Usuario implements Serializable, ICategoria {
@@ -80,11 +79,11 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
-        sb.append("E-Mail: " + mailCliente + "\n");
-        sb.append("Localidad: " + localidadCliente + "\n");
-        sb.append("Categoria: " + getCategoria() + "\n");
-        sb.append("Usuario: " + getUsuario() + "\n");
-        sb.append("Contraseña: " + getContrasena() + "\n");
+        sb.append("E-Mail: " + mailCliente + ", ");
+        sb.append("Localidad: " + localidadCliente + ", ");
+        sb.append("Categoria: " + getCategoria() + ", ");
+        sb.append("Usuario: " + getUsuario() + ", ");
+        sb.append("Contraseña: " + getContrasena());
 
         return sb.toString();
     }
