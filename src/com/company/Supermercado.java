@@ -35,7 +35,9 @@ public class Supermercado {
     }
 
     public void setUsuarios(LinkedHashSet<Usuario> usuarios) {
-        this.usuarios = usuarios;
+        if (usuarios != null){
+            this.usuarios = usuarios;
+        }
     }
 
     public String getNombreSupermercado() {
@@ -74,7 +76,7 @@ public class Supermercado {
         return null;
     }
 
-    public boolean buscarPorNombreUsuario (String usr) {
+    public boolean buscarPorNombreUsuarioLogin (String usr) {
         boolean flag = false;
         for (Usuario usuario : usuarios) {
             if (usuario.getUsuario().equals(usr)) {
@@ -87,21 +89,16 @@ public class Supermercado {
     public String muestraUsuarios() {
         StringBuilder sb = new StringBuilder();
         for (Usuario usuario : usuarios){
+            sb.append("[Nombre: " + usuario.getNombre() + ", ");
+            sb.append("Apellido: " + usuario.getApellido() + ", ");
+            sb.append("DNI: " + usuario.getDni() + ", ");
+            sb.append("Usuario: " + usuario.getUsuario() + ", ");
+            sb.append("Contraseña: " + usuario.getContrasena() + ", ");
             if (usuario instanceof Admin){
-                sb.append("[Nombre: " + usuario.getNombre() + ", ");
-                sb.append("Apellido: " + usuario.getApellido() + ", ");
-                sb.append("DNI: " + usuario.getDni() + ", ");
-                sb.append("Usuario: " + usuario.getUsuario() + ", ");
-                sb.append("Contraseña: " + usuario.getContrasena() + ", ");
                 sb.append("Cargo: " + ((Admin) usuario).getCargo());
                 sb.append("]" + "\n");
             }
             else if (usuario instanceof Cliente){
-                sb.append("[Nombre: " + usuario.getNombre() + ", ");
-                sb.append("Apellido: " + usuario.getApellido() + ", ");
-                sb.append("DNI: " + usuario.getDni() + ", ");
-                sb.append("Usuario: " + usuario.getUsuario() + ", ");
-                sb.append("Contraseña: " + usuario.getContrasena() + ", ");
                 sb.append("E-Mail: " + ((Cliente) usuario).getMailCliente() + ", ");
                 sb.append("Localidad: " + ((Cliente) usuario).getLocalidadCliente() + ", ");
                 sb.append("Categoria: " + ((Cliente) usuario).getCategoria());
@@ -114,7 +111,8 @@ public class Supermercado {
     public String muestraProductos (){
         StringBuilder sb = new StringBuilder();
         for (Producto producto : listadoProductos){
-
+            sb.append(producto.toString());
+            sb.append("\n");
         }
 
         return sb.toString();
@@ -123,9 +121,22 @@ public class Supermercado {
     public String muestraProductosPorCategoria (String categoria){
         StringBuilder sb = new StringBuilder();
         for (Producto producto : listadoProductos){
-
+            if (producto.getCategoria().equals(categoria)){
+                sb.append(producto.toString());
+                sb.append("\n");
+            }
         }
         return sb.toString();
+    }
+
+    public Usuario buscarUsuario (String usuario){
+        Usuario usr = null;
+        for (Usuario usuarioAux : usuarios){
+            if (usuarioAux.getDni().equals(usuario)){
+                usr = usuarioAux;
+            }
+        }
+        return usr;
     }
 
 }

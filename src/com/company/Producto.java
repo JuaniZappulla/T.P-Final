@@ -125,7 +125,8 @@ public class Producto implements ICategoria {
         sb.append("Marca: " + getMarcaProducto() + ", ");
         sb.append("Precio:$ " + getPrecioProducto() + ", ");
         sb.append("Stock: " + getStockProducto() + ", ");
-        sb.append("Comentario: " + getComentario());
+        sb.append("Comentario: " + getComentario() + ", ");
+        sb.append("Categoria: " + getCategoria());
         sb.append("]" + "\n");
         return sb.toString();
     }

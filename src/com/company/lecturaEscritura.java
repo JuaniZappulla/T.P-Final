@@ -1,8 +1,6 @@
 package com.company;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 import java.io.*;
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
@@ -32,18 +30,19 @@ public class lecturaEscritura {
         }
     }
 
-    public void leeClientes (Supermercado mercado){
+    public LinkedHashSet<Usuario> leeClientes (){
+        LinkedHashSet<Usuario> usuarios = null;
         try {
-            BufferedReader lectura = new BufferedReader(new FileReader(fileClient));
-            Gson gson = new Gson();
-            Cliente[] clientes = gson.fromJson(lectura, Cliente[].class);
-            LinkedHashSet<Cliente> usuarios = new LinkedHashSet<>(Arrays.asList(clientes));
-            for (Cliente usuario2 : usuarios){
-                mercado.nuevoUsuario(usuario2);
+            if (fileClient.length() > 0){
+                BufferedReader lectura = new BufferedReader(new FileReader(fileClient));
+                Gson gson = new Gson();
+                Cliente[] clientes = gson.fromJson(lectura, Cliente[].class);
+                usuarios = new LinkedHashSet<>(Arrays.asList(clientes));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        return usuarios;
     }
 
     public void grabaProductos (ArrayList<Producto> listadoProductos, Supermercado mercado){
@@ -60,16 +59,19 @@ public class lecturaEscritura {
     }
 
     public ArrayList<Producto> leeProductos () {
-        ArrayList<Producto> producto = null;
+        ArrayList<Producto> productos = null;
         try {
-            BufferedReader lectura = new BufferedReader(new FileReader(fileClient));
-            Gson gson = new Gson();
-            Producto[] productos = gson.fromJson(lectura, Producto[].class);
-            producto = new ArrayList<>(Arrays.asList(productos));
+            if (fileProduct.length() > 0){
+                BufferedReader lectura = new BufferedReader(new FileReader(fileProduct));
+                Gson gson = new Gson();
+                Producto[] producto = gson.fromJson(lectura, Producto[].class);
+                productos = new ArrayList<>(Arrays.asList(producto));
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return producto;
+
+        return productos;
     }
 
 }

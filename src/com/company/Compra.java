@@ -95,10 +95,6 @@ public class Compra extends Producto{
 		return flag;
 	}
 
-
-
-
-
 	/**
 	 * @return the producto
 	 */

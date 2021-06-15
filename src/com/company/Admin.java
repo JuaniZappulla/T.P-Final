@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Admin extends Usuario implements Serializable {
 
-    //private int idAdministrador;
     private String cargo;
 
     public Admin() {
