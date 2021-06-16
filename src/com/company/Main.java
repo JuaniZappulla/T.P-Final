@@ -1,6 +1,8 @@
 package com.company;
 
 import exceptions.CargaProductoException;
+
+
 import java.util.Scanner;
 
 
@@ -80,7 +82,9 @@ public class Main {
                 	 muestraPorCategoria(superMerca);
                 	 break;
                  case 3:
-                	 realizarCompra();
+                	 
+                	 realizarCompra(superMerca);
+                	 
                 	 break;
                  case 4:
                 	 
@@ -96,11 +100,11 @@ public class Main {
                 	 finCompra(superMerca);
                 	 break;
                  case 7:
-                	 System.out.println("en proceso...");
+                	System.out.println("en proceso...");
                 	
                 	 break;
                  case 8:
-                	 
+                	 usr= modificarDatos(superMerca);
                 	 break;
                 	 
                 	 
@@ -377,29 +381,103 @@ public class Main {
     		unProducto.setPago(false);
     	}
     }
-    public static void realizarCompra()///falta probar 
-    {
+    public static void realizarCompra(Supermercado supermercado)///falta probar 
+    {//se rompe al cargar el segundo pedido 
     	Carrito<Producto> unProducto= new Carrito<>();
-    	
+    	Producto producto1= new Producto();
     	Compra compraProducto= new Compra();
     	String nombreProducto;
+    
+    System.out.println(supermercado.muestraProductos());
+    char continuar = 's';//1 contunuar, 0 finalizar
+    do {
+    	producto1=null;
        System.out.println("ingrese el procuto que dese comprar:");
-       nombreProducto= scanner.next();
-      compraProducto=(Compra) compraProducto.buscarPorNombre(nombreProducto);
-      if( compraProducto!=null)
+       nombreProducto= scanner.nextLine();
+       
+      producto1= compraProducto.buscarPorNombre(nombreProducto, supermercado);
+
+     if( producto1!=null)
       {
-    	  unProducto.agregarCarrito(compraProducto);
+    	  unProducto.agregarCarrito(producto1);
       }
       else
       {
     	  System.out.println("el producto elegido no existe");
       }
+    
+    System.out.println("desea continuar: s/n ");
+	continuar= scanner.next().charAt(0);
+	}while(continuar == 's');
+   
     }
 public static Usuario modificarDatos(Supermercado mercado)
 {
 	Cliente modCliente = new Cliente();
-	///falta terminar 
-	
-	return modCliente;
+	int opc=0;
+	System.out.println("seleccione el dato a modificar:");
+	System.out.println("1. nombre/n 2. apellido\n 3. dni\n 4. E-Mail\n 5.localidad\n 6.categoria\n 7. idUsuario\n 8.contraseña");
+	opc=scanner.nextInt();
+    System.out.println("opcion elegida:"+opc);
+    boolean flag = false;
+    String usuario;
+    switch(opc)
+    {
+    case 1:
+    System.out.println("Nombre: ");
+    modCliente.setNombre(scanner.nextLine());
+    break;
+    case 2:
+    System.out.println("Apellido: ");
+    modCliente.setApellido(scanner.nextLine());
+    break;
+    case 3:
+    System.out.println("DNI");
+    modCliente.setDni(scanner.nextLine());
+    break;
+    case 4:
+    do{
+        System.out.println("E-Mail");
+        modCliente.setMailUsuario(scanner.nextLine());
+        if (modCliente.getMailCliente().contains("@")){
+            flag = true;
+        }else{
+            System.out.println("Error, mail no valido, reintente...");
+        }
+    }while (!flag);
+    break;
+    case 5:
+    System.out.println("Localidad: ");
+    modCliente.setLocalidadCliente(scanner.nextLine());
+    break;
+    case 6:
+    System.out.println("Categoria: ");
+    modCliente.setCategoria(scanner.nextLine());
+    break;
+    case 7:
+    do{
+        System.out.println("Nombre de usuario: ");
+        usuario = scanner.nextLine();
+        if (mercado.buscarPorNombreUsuarioLogin(usuario)){
+            System.out.println("Error, usuario ya registrado.");
+        }
+        else{
+        	modCliente.setUsuario(usuario);
+        }
+    }while (mercado.buscarPorNombreUsuarioLogin(usuario));
+    break;
+    case 8:
+    System.out.println("contraseÃ±a: ");
+    modCliente.setContrasena(scanner.nextLine());
+    modCliente.setActivo(true);
+    break;
+    }
+    return modCliente;
 }
+
+
+
 }
+    
+   
+
