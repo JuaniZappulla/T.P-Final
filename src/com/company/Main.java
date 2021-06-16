@@ -1,8 +1,6 @@
 package com.company;
 
 import exceptions.CargaProductoException;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -10,13 +8,14 @@ public class Main {
     public static Scanner scanner;
 
     public static void main(String[] args){
-        int opc = 0;
+        int opc;
+        scanner = new Scanner(System.in);
         lecturaEscritura lye = new lecturaEscritura();
-        Supermercado superMerca = new Supermercado("LaSuperMerca");
+        Supermercado superMerca = new Supermercado("La Super Merca");
         superMerca.setUsuarios(lye.leeClientes());
         superMerca.setListadoProductos(lye.leeProductos());
         cargarAdmins(superMerca);
-        scanner = new Scanner(System.in);
+        System.out.println("SuperMercado " + superMerca.getNombreSupermercado());
         Usuario usr = Login(superMerca);
         if (usr instanceof Admin){
             do{
@@ -41,13 +40,25 @@ public class Main {
                         restockearProducto(superMerca);
                         break;
                     case 5:
-                        System.out.println(usr);
+                        bajaProducto(superMerca);
                         break;
                     case 6:
-                        System.out.println(superMerca.muestraUsuarios());
+                        altaProducto(superMerca);
                         break;
                     case 7:
+                        System.out.println(usr);
+                        break;
+                    case 8:
+                        System.out.println(superMerca.muestraUsuarios());
+                        break;
+                    case 9:
                         buscaUsuario(superMerca);
+                        break;
+                    case 10:
+                        bajaCliente(superMerca);
+                        break;
+                    case 11:
+                        altaCliente(superMerca);
                         break;
                 }
             }while (opc != 0);
@@ -65,9 +76,13 @@ public class Main {
         System.out.println("2. VER LISTA PRODUCTOS");
         System.out.println("3. VER LISTA PRODUCTOS POR CATEGORIA");
         System.out.println("4. RENOVAR STOCK DE UN PRODUCTO");
-        System.out.println("5. VER USUARIO ADMINISTRADOR");
-        System.out.println("6. VER LISTA CLIENTES");
-        System.out.println("7. BUSCAR CLIENTE");
+        System.out.println("5. DAR DE BAJA UN PRODUCTO");
+        System.out.println("6. DAR DE ALTA UN PRODUCTO");
+        System.out.println("7. VER USUARIO ADMINISTRADOR");
+        System.out.println("8. VER LISTA CLIENTES");
+        System.out.println("9. BUSCAR CLIENTE");
+        System.out.println("10. DAR DE BAJA UN CLIENTE");
+        System.out.println("11. DAR DE ALTA UN CLIENTE");
         System.out.println("0. SALIR");
         System.out.println("SELECCIONE UNA OPCION: ");
     }
@@ -85,7 +100,7 @@ public class Main {
         usuario = scanner.nextLine();
         System.out.println("Contraseña");
         contrasena = scanner.nextLine();
-        usr = mercado.buscarUsuario(usuario, contrasena);
+        usr = mercado.buscarUsuarioLogin(usuario, contrasena);
         if (usr != null) {
             System.out.println("Logeado con exito!");
             System.out.println("Bienvenido " + usr.getNombre());
@@ -183,20 +198,20 @@ public class Main {
         Usuario usr = mercado.buscarUsuario(usuario);
         if ( usr instanceof Cliente) {
             System.out.println("Id:" + usr.getId());
-            System.out.println(usr.toString());
+            System.out.println(usr);
         } else if (usr instanceof Admin) {
             System.out.println("Id:" + usr.getId());
-            System.out.println(usr.toString());
+            System.out.println(usr);
         }
     }
 
     public static void restockearProducto (Supermercado mercado){
         int idProducto;
         int cantidad;
-        boolean flag = false;
+        boolean flag;
         System.out.println("Ingrese id de producto: ");
         idProducto = scanner.nextInt();
-        flag = mercado.restockBuscaProducto(idProducto);
+        flag = mercado.BuscaProducto(idProducto);
         if (!flag){
             System.out.println("ERROR, ID INCORRECTO O SE DESACTIVÓ EL PRODUCTO");
         }
@@ -206,9 +221,70 @@ public class Main {
             flag = mercado.restockProducto(idProducto, cantidad);
             if(!flag){
                 System.out.println("ERROR, REINTENTE");
-            }else{
+            }
+            else{
                 System.out.println("INGRESO DE STOCK CORRECTO");
             }
+        }
+    }
+
+    public static void bajaProducto (Supermercado mercado){
+        int idProducto;
+        boolean flag;
+        System.out.println("Ingrese id de producto: ");
+        idProducto = scanner.nextInt();
+        flag = mercado.bajaDeProducto(idProducto);
+        if (!flag){
+            System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÁ DESACTIVADO");
+        }
+        else{
+            System.out.println("PRODUCTO DADO DE BAJA CON EXITO");
+        }
+    }
+
+    public static void altaProducto (Supermercado mercado){
+        int idProducto;
+        boolean flag;
+        System.out.println("PRODUCTOS DADOS DE BAJA");
+        System.out.println(mercado.muestraDadosDeBajaProductos());
+        System.out.println("Ingrese id de producto: ");
+        idProducto = scanner.nextInt();
+        flag = mercado.altaDeProducto(idProducto);
+        if (!flag){
+            System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÁ DADO DE ALTA");
+        }
+        else{
+            System.out.println("PRODUCTO DADO DE ALTA CON EXITO");
+        }
+    }
+
+    public static void bajaCliente (Supermercado mercado){
+        String dni;
+        boolean flag;
+        System.out.println("Ingrese DNI de cliente: ");
+        dni = scanner.nextLine();
+        flag = mercado.bajaDeCliente(dni);
+        if (!flag){
+            System.out.println("ERROR, EL CLIENTE NO SE ENCUENTRA O YA ESTÁ DADO DE BAJA");
+        }
+        else{
+            System.out.println("CLIENTE DADO DE BAJA CON EXITO");
+        }
+    }
+
+    public static void altaCliente (Supermercado mercado){
+        String dni;
+        boolean flag;
+        System.out.println("CLIENTES DADOS DE BAJA");
+        System.out.println(mercado.muestraDadosDeBajaUsuarios());
+        System.out.println("Ingrese DNI de producto: ");
+        dni = scanner.nextLine();
+        flag = mercado.altaDeCliente(dni);
+        if (!flag){
+            System.out.println("ERROR, EL USUARIO NO SE ENCUENTRA O YA ESTÁ DADO DE ALTA");
+        }
+        else{
+            System.out.println("USUARIO DADO DE ALTA CON EXITO");
         }
     }
 

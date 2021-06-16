@@ -84,7 +84,6 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
         sb.append("Categoria: " + getCategoria() + ", ");
         sb.append("Usuario: " + getUsuario() + ", ");
         sb.append("Contraseña: " + getContrasena());
-
         return sb.toString();
     }
 

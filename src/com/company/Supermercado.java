@@ -50,17 +50,7 @@ public class Supermercado {
         this.nombreSupermercado = nombreSupermercado;
     }
 
-    public Cliente buscarClientePorDni(BigInteger dniCliente){
-        Cliente clienteBuscado = new Cliente();
-        for (Usuario cliente : usuarios){
-            if (cliente.getDni().equals(dniCliente)){
-                clienteBuscado = (Cliente) cliente;
-            }
-        }
-        return clienteBuscado;
-    }
-
-    public Usuario buscarUsuario (String usr, String pass){
+    public Usuario buscarUsuarioLogin (String usr, String pass){
         for (Usuario usuario : usuarios){
             if (usuario.getUsuario().equals(usr)){
                 if (usuario.getContrasena().equals(pass)){
@@ -91,9 +81,13 @@ public class Supermercado {
     public String muestraUsuarios() {
         StringBuilder sb = new StringBuilder();
         for (Usuario usuario : usuarios) {
-            sb.append("[");
-            sb.append(usuario.toString());
-            sb.append("]" + "\n");
+            if (usuario instanceof Cliente){
+                if (((Cliente) usuario).getActivo()){
+                    sb.append("\n");
+                    sb.append("[" + usuario + "]");
+                    sb.append("\n");
+                }
+            }
         }
         return sb.toString();
     }
@@ -101,10 +95,11 @@ public class Supermercado {
     public String muestraProductos (){
         StringBuilder sb = new StringBuilder();
         for (Producto producto : listadoProductos){
-            sb.append(producto.toString());
-            sb.append("\n");
+            if (producto.isActivo()){
+                sb.append(producto);
+                sb.append("\n");
+            }
         }
-
         return sb.toString();
     }
 
@@ -119,17 +114,17 @@ public class Supermercado {
         return sb.toString();
     }
 
-    public Usuario buscarUsuario (String usuario){
+    public Usuario buscarUsuario (String dni){
         Usuario usr = null;
         for (Usuario usuarioAux : usuarios){
-            if (usuarioAux.getDni().equals(usuario)){
+            if (usuarioAux.getDni().equals(dni)){
                 usr = usuarioAux;
             }
         }
         return usr;
     }
 
-    public boolean restockBuscaProducto (int id){
+    public boolean BuscaProducto (int id){
         boolean flag = false;
         for (Producto producto : listadoProductos){
             if (producto.getIdProducto() == id){
@@ -153,4 +148,84 @@ public class Supermercado {
         return flag;
     }
 
+    public boolean bajaDeProducto (int id){
+        boolean flag = false;
+        for (Producto producto : listadoProductos){
+            if (producto.getIdProducto() == id){
+                if (producto.isActivo()){
+                    producto.setActivo(false);
+                    flag = true;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public String muestraDadosDeBajaProductos (){
+        StringBuilder sb = new StringBuilder();
+        for (Producto producto : listadoProductos){
+            if (!producto.isActivo()){
+                sb.append(producto);
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    public boolean altaDeProducto (int id){
+        boolean flag = false;
+        for (Producto producto : listadoProductos){
+            if (producto.getIdProducto() == id){
+                if (!producto.isActivo()){
+                    producto.setActivo(true);
+                    flag = true;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public boolean bajaDeCliente(String dni){
+        boolean flag = false;
+        for (Usuario usuarioAux: usuarios){
+            if (usuarioAux.getDni().equals(dni)){
+                if (usuarioAux instanceof Cliente){
+                    if (((Cliente) usuarioAux).getActivo()){
+                        ((Cliente) usuarioAux).setActivo(false);
+                        flag = true;
+                    }
+                }
+            }
+        }
+        return flag;
+    }
+
+    public String muestraDadosDeBajaUsuarios() {
+        StringBuilder sb = new StringBuilder();
+        for (Usuario usuario : usuarios) {
+            if (usuario instanceof Cliente){
+                if (!((Cliente) usuario).getActivo()){
+                    sb.append("\n");
+                    sb.append("[" + usuario + "]");
+                    sb.append("\n");
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    public boolean altaDeCliente(String dni){
+        boolean flag = false;
+        for (Usuario usuarioAux: usuarios){
+            if (usuarioAux instanceof Cliente) {
+                if (usuarioAux.getDni().equals(dni)) {
+                    if (!((Cliente) usuarioAux).getActivo()) {
+                        ((Cliente) usuarioAux).setActivo(true);
+                        flag = true;
+                    }
+                }
+            }
+        }
+        return flag;
+    }
 }
