@@ -65,6 +65,20 @@ public class Main {
         }
         else if (usr instanceof Cliente){
             menuCliente();
+             opc = scanner.nextInt();
+             scanner.nextLine();
+             switch (opc)
+             {
+                 case 1:
+                	 System.out.println(superMerca.muestraProductos());
+                	 break;
+                 case 2:
+                	 muestraPorCategoria(superMerca);
+                	 break;
+                 case 3:
+                	 System.out.println("por terminar");
+                	 break;
+             }
         }
         lye.grabaClientes(superMerca.getUsuarios(), superMerca);
         lye.grabaProductos(superMerca.getListadoProductos(), superMerca);
@@ -88,7 +102,20 @@ public class Main {
     }
 
     public static void menuCliente (){
-        System.out.println("En desarrollo...");
+        System.out.println("MENU CLIENTE");
+        System.out.println("1. VER LISTA PRODUCTOS");
+        System.out.println("2. VER LISTA DE PRODUCTOS POR CATEGORIA");
+        System.out.println("3. CARGAR PRODUCTO AL CARRITO");
+        System.out.println("4.VER CARRITO");
+        System.out.println("5.VER HISTORIAL DE COMPRA");
+        System.out.println("6.FINALIZAR PEDIDO");
+        System.out.println("7.CANCELAR PEDIDO");///SE PODRIA MODIFICAR
+        System.out.println("8.MODIFICAR DATOS PERSONALES");
+        System.out.println("9.DAR DEBAJA LA CUENTA");
+        System.out.println("10. BUSCAR UN PRODUCTO EN ESPECIFICO");
+        System.out.println("11. DEJAR UN COMENTARIO DEL PRODUCTO");
+        System.out.println("0. SALIR");
+        System.out.println("SELECCIONE UNA OPCION: ");
     }
 
     public static Usuario Login (Supermercado mercado) {
@@ -323,6 +350,18 @@ public class Main {
     	{
     		unProducto.setPago(false);
     	}
+    }/*
+    public static void realizarCompra(Supermercado mercado)
+    {
+    	Carrito<Producto> unProducto= new Carrito<>();
+    	int idProducto=0;
+       
+        mercado.muestraProductos();
+    	System.out.println("ingrese el id del producto a comprar:");
+    	idProducto=scanner.nextInt();
+    	
+       Producto produc1= mercado.;///falta terminar
+    	unProducto.agregarCarrito();
     }
-
+*/
 }
