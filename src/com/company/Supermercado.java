@@ -3,6 +3,8 @@ package com.company;
 import java.math.BigInteger;
 import java.util.*;
 
+
+
 public class Supermercado {
     private String nombreSupermercado;
     private LinkedHashSet<Usuario> usuarios;
@@ -228,4 +230,7 @@ public class Supermercado {
         }
         return flag;
     }
+    
+    
+
 }
