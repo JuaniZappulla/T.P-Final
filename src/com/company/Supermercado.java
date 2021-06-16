@@ -105,12 +105,33 @@ public class Supermercado {
         return sb.toString();
     }
 
+    public String muestraProductosParaCliente (){
+        StringBuilder sb = new StringBuilder();
+        for (Producto producto : listadoProductos){
+            if (producto.isActivo() && producto.getStockProducto() > 0){
+                sb.append(producto);
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
+    }
+
     public String muestraProductosPorCategoria (String categoria){
         StringBuilder sb = new StringBuilder();
         for (Producto producto : listadoProductos){
             if (producto.getCategoria().equals(categoria)){
-                sb.append(producto.toString());
+                sb.append(producto);
                 sb.append("\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    public String buscaUnSoloProducto (String nombreProducto){
+        StringBuilder sb = new StringBuilder();
+        for (Producto producto : listadoProductos){
+            if (producto.getNombreProducto().equals(nombreProducto)){
+                sb.append(producto);
             }
         }
         return sb.toString();

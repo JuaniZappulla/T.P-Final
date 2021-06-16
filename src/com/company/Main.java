@@ -76,32 +76,48 @@ public class Main {
                 scanner.nextLine();
                 switch (opc) {
                     case 1:
-                        System.out.println(superMerca.muestraProductos());
-                        break;
-                    case 2:
-                        muestraPorCategoria(superMerca);
-                        break;
-                    case 3:
-                        realizarCompra(superMerca);
-                        break;
-                    case 4:
-                        Carrito<Compra> ProcesoCompras = new Carrito<>();
-                        System.out.println(ProcesoCompras.mostrarCarrito());
-                        break;
-                    case 5:
-                        System.out.println(datosCliente.getHistorialCompras());
-                        break;
-                    case 6:
-                        finCompra(superMerca);
-                        break;
-                    case 7:
-                        System.out.println("en proceso...");
-                        break;
-                    case 8:
                         modificarDatos(superMerca, usr);
                         break;
-                    case 9:
+                    case 2:
                         System.out.println(usr);
+                        break;
+                    case 3:
+                        do{
+                            menuCompra();
+                            opc = scanner.nextInt();
+                            scanner.nextLine();
+                            switch(opc){
+                                case 1:
+                                    System.out.println(superMerca.muestraProductosParaCliente());
+                                    break;
+                                case 2:
+                                    muestraPorCategoria(superMerca);
+                                    break;
+                                case 3:
+                                    buscaUnProducto(superMerca);
+                                    break;
+                                case 4:
+
+                                    break;
+                                case 5:
+                                    realizarCompra(superMerca);
+                                    break;
+                                case 6:
+                                    Carrito<Compra> ProcesoCompras = new Carrito<>();
+                                    System.out.println(ProcesoCompras.mostrarCarrito());
+                                    break;
+                                case 7:
+                                    System.out.println(datosCliente.getHistorialCompras());
+                                    break;
+                                case 8:
+                                    break;
+                                case 9:
+                                    finCompra(superMerca);
+                                    break;
+                            }
+                        }while(opc != 0);
+                    case 4:
+                        System.out.println("en proceso...");
                         break;
                 }
             }while (opc != 0);
@@ -129,20 +145,27 @@ public class Main {
 
     public static void menuCliente (){
         System.out.println("MENU CLIENTE");
-        System.out.println("1. VER LISTA PRODUCTOS");
-        System.out.println("2. VER LISTA DE PRODUCTOS POR CATEGORIA");
-        System.out.println("3. CARGAR PRODUCTO AL CARRITO");
-        System.out.println("4.VER CARRITO");
-        System.out.println("5.VER HISTORIAL DE COMPRA");
-        System.out.println("6.FINALIZAR PEDIDO");
-        System.out.println("7.CANCELAR PEDIDO");///SE PODRIA MODIFICAR
-        System.out.println("8.MODIFICAR DATOS PERSONALES");
-        System.out.println("9. VER CLIENTE ACTUAL");
-        System.out.println("10.DAR DEBAJA LA CUENTA");
-        System.out.println("11. BUSCAR UN PRODUCTO EN ESPECIFICO");
-        System.out.println("12. DEJAR UN COMENTARIO DEL PRODUCTO");
+        System.out.println("1. MODIFICAR DATOS PERSONALES");
+        System.out.println("2. VER CLIENTE ACTUAL");
+        System.out.println("3. COMPRAR");
+        System.out.println("4. DAR DEBAJA LA CUENTA");
         System.out.println("0. SALIR");
         System.out.println("SELECCIONE UNA OPCION: ");
+    }
+
+    public static void menuCompra (){
+        System.out.println("MENU COMPRA");
+        System.out.println("1. VER LISTA PRODUCTOS");
+        System.out.println("2. VER LISTA DE PRODUCTOS POR CATEGORIA");
+        System.out.println("3. BUSCAR UN PRODUCTO EN ESPECIFICO");
+        System.out.println("4. DEJAR UN COMENTARIO DEL PRODUCTO");
+        System.out.println("5. CARGAR PRODUCTO AL CARRITO");
+        System.out.println("6.VER CARRITO");
+        System.out.println("7.VER HISTORIAL DE COMPRAS");
+        System.out.println("8.CANCELAR PEDIDO");///SE PODRIA MODIFICAR
+        System.out.println("9.FINALIZAR PEDIDO");
+        System.out.println("0.ATRAS");
+        System.out.println("SELECCIONE UNA OPCION");
     }
 
     public static Usuario Login (Supermercado mercado) {
@@ -247,6 +270,14 @@ public class Main {
         System.out.println(mercado.muestraProductosPorCategoria(categoria));
     }
 
+    public static void buscaUnProducto(Supermercado mercado){
+        String producto;
+        System.out.println("INGRESE NOMBRE DE PRODUCTO: ");
+        producto = scanner.nextLine();
+        System.out.println(mercado.buscaUnSoloProducto(producto));
+    }
+
+
     public static void buscaUsuario(Supermercado mercado) {
         String usuario;
         System.out.println("INGRESE DNI DE USUARIO: ");
@@ -343,6 +374,7 @@ public class Main {
             System.out.println("USUARIO DADO DE ALTA CON EXITO");
         }
     }
+
     public static void finCompra(Supermercado mercado)
     {
     	int tipoPago=0;
@@ -364,8 +396,7 @@ public class Main {
     		System.out.println("el tipo de pago es incorrecto, intente nuevamente");
     	}
     	}while(tipoPago==1 || tipoPago==2);
-    	
-    	
+
     	System.out.println("el total a pagar es:" +unProducto.getPrecioTotal());
     	System.out.println("para realizar el pago precione 1, en caso contrario 2");
     	aux=scanner.nextInt();
@@ -409,7 +440,8 @@ public class Main {
 	}while(continuar == 's');
    
     }
-public static void modificarDatos(Supermercado mercado, Usuario usr) {
+
+    public static void modificarDatos(Supermercado mercado, Usuario usr) {
 	int opc;
 	System.out.println("seleccione el dato a modificar:");
 	System.out.println(" 1. nombre\n 2. apellido\n 3. dni\n 4. E-Mail\n 5.localidad\n 6.categoria\n 7. idUsuario\n 8.contraseña\n ELIJA UNA OPCION:");
