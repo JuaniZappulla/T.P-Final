@@ -23,8 +23,6 @@ public class Admin extends Usuario implements Serializable {
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
-
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

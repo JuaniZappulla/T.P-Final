@@ -70,45 +70,41 @@ public class Main {
             }while (opc != 0);
         }
         else if (usr instanceof Cliente){
-            menuCliente();
-             opc = scanner.nextInt();
-             scanner.nextLine();
-             switch (opc)
-             {
-                 case 1:
-                	 System.out.println(superMerca.muestraProductos());
-                	 break;
-                 case 2:
-                	 muestraPorCategoria(superMerca);
-                	 break;
-                 case 3:
-                	 
-                	 realizarCompra(superMerca);
-                	 
-                	 break;
-                 case 4:
-                	 
-                	 Carrito<Compra>ProcesoCompras= new Carrito<>();
-                	 System.out.println(ProcesoCompras.mostrarCarrito());
-                	 
-                	 break;
-                 case 5:
-                	
-                    System.out.println(datosCliente.getHistorialCompras());
-                	 break;
-                 case 6:
-                	 finCompra(superMerca);
-                	 break;
-                 case 7:
-                	System.out.println("en proceso...");
-                	
-                	 break;
-                 case 8:
-                	 usr= modificarDatos(superMerca);
-                	 break;
-                	 
-                	 
-             }
+            do {
+                menuCliente();
+                opc = scanner.nextInt();
+                scanner.nextLine();
+                switch (opc) {
+                    case 1:
+                        System.out.println(superMerca.muestraProductos());
+                        break;
+                    case 2:
+                        muestraPorCategoria(superMerca);
+                        break;
+                    case 3:
+                        realizarCompra(superMerca);
+                        break;
+                    case 4:
+                        Carrito<Compra> ProcesoCompras = new Carrito<>();
+                        System.out.println(ProcesoCompras.mostrarCarrito());
+                        break;
+                    case 5:
+                        System.out.println(datosCliente.getHistorialCompras());
+                        break;
+                    case 6:
+                        finCompra(superMerca);
+                        break;
+                    case 7:
+                        System.out.println("en proceso...");
+                        break;
+                    case 8:
+                        modificarDatos(superMerca, usr);
+                        break;
+                    case 9:
+                        System.out.println(usr);
+                        break;
+                }
+            }while (opc != 0);
         }
         lye.grabaClientes(superMerca.getUsuarios(), superMerca);
         lye.grabaProductos(superMerca.getListadoProductos(), superMerca);
@@ -141,9 +137,10 @@ public class Main {
         System.out.println("6.FINALIZAR PEDIDO");
         System.out.println("7.CANCELAR PEDIDO");///SE PODRIA MODIFICAR
         System.out.println("8.MODIFICAR DATOS PERSONALES");
-        System.out.println("9.DAR DEBAJA LA CUENTA");
-        System.out.println("10. BUSCAR UN PRODUCTO EN ESPECIFICO");
-        System.out.println("11. DEJAR UN COMENTARIO DEL PRODUCTO");
+        System.out.println("9. VER CLIENTE ACTUAL");
+        System.out.println("10.DAR DEBAJA LA CUENTA");
+        System.out.println("11. BUSCAR UN PRODUCTO EN ESPECIFICO");
+        System.out.println("12. DEJAR UN COMENTARIO DEL PRODUCTO");
         System.out.println("0. SALIR");
         System.out.println("SELECCIONE UNA OPCION: ");
     }
@@ -381,6 +378,7 @@ public class Main {
     		unProducto.setPago(false);
     	}
     }
+
     public static void realizarCompra(Supermercado supermercado)///falta probar 
     {//se rompe al cargar el segundo pedido 
     	Carrito<Producto> unProducto= new Carrito<>();
@@ -411,71 +409,65 @@ public class Main {
 	}while(continuar == 's');
    
     }
-public static Usuario modificarDatos(Supermercado mercado)
-{
-	Cliente modCliente = new Cliente();
-	int opc=0;
+public static void modificarDatos(Supermercado mercado, Usuario usr) {
+	int opc;
 	System.out.println("seleccione el dato a modificar:");
-	System.out.println("1. nombre/n 2. apellido\n 3. dni\n 4. E-Mail\n 5.localidad\n 6.categoria\n 7. idUsuario\n 8.contraseña");
-	opc=scanner.nextInt();
-    System.out.println("opcion elegida:"+opc);
+	System.out.println(" 1. nombre\n 2. apellido\n 3. dni\n 4. E-Mail\n 5.localidad\n 6.categoria\n 7. idUsuario\n 8.contraseña\n ELIJA UNA OPCION:");
+	opc = scanner.nextInt();
+    scanner.nextLine();
+    System.out.println("opcion elegida: "+opc);
     boolean flag = false;
     String usuario;
-    switch(opc)
-    {
-    case 1:
-    System.out.println("Nombre: ");
-    modCliente.setNombre(scanner.nextLine());
-    break;
-    case 2:
-    System.out.println("Apellido: ");
-    modCliente.setApellido(scanner.nextLine());
-    break;
-    case 3:
-    System.out.println("DNI");
-    modCliente.setDni(scanner.nextLine());
-    break;
-    case 4:
-    do{
-        System.out.println("E-Mail");
-        modCliente.setMailUsuario(scanner.nextLine());
-        if (modCliente.getMailCliente().contains("@")){
-            flag = true;
-        }else{
-            System.out.println("Error, mail no valido, reintente...");
+        switch (opc) {
+            case 1:
+                System.out.println("Nombre: ");
+                usr.setNombre(scanner.nextLine());
+                break;
+            case 2:
+                System.out.println("Apellido: ");
+                usr.setApellido(scanner.nextLine());
+                break;
+            case 3:
+                System.out.println("DNI");
+                usr.setDni(scanner.nextLine());
+                break;
+            case 4:
+                do {
+                    System.out.println("E-Mail");
+                    ((Cliente) usr).setMailUsuario(scanner.nextLine());
+                    if (((Cliente) usr).getMailCliente().contains("@")){
+                        flag = true;
+                    }else{
+                        System.out.println("Error, mail no valido, reintente...");
+                     }
+                } while (!flag);
+                break;
+            case 5:
+                System.out.println("Localidad: ");
+                ((Cliente) usr).setLocalidadCliente(scanner.nextLine());
+                break;
+            case 6:
+                System.out.println("Categoria: ");
+                ((Cliente) usr).setCategoria(scanner.nextLine());
+                break;
+            case 7:
+                do {
+                    System.out.println("Nombre de usuario: ");
+                    usuario = scanner.nextLine();
+                    if (mercado.buscarPorNombreUsuarioLogin(usuario)) {
+                        System.out.println("Error, usuario ya registrado.");
+                    } else {
+                        usr.setUsuario(usuario);
+                    }
+                } while (mercado.buscarPorNombreUsuarioLogin(usuario));
+                break;
+            case 8:
+                System.out.println("contraseÃ±a: ");
+                usr.setContrasena(scanner.nextLine());
+                ((Cliente) usr).setActivo(true);
+                break;
         }
-    }while (!flag);
-    break;
-    case 5:
-    System.out.println("Localidad: ");
-    modCliente.setLocalidadCliente(scanner.nextLine());
-    break;
-    case 6:
-    System.out.println("Categoria: ");
-    modCliente.setCategoria(scanner.nextLine());
-    break;
-    case 7:
-    do{
-        System.out.println("Nombre de usuario: ");
-        usuario = scanner.nextLine();
-        if (mercado.buscarPorNombreUsuarioLogin(usuario)){
-            System.out.println("Error, usuario ya registrado.");
-        }
-        else{
-        	modCliente.setUsuario(usuario);
-        }
-    }while (mercado.buscarPorNombreUsuarioLogin(usuario));
-    break;
-    case 8:
-    System.out.println("contraseÃ±a: ");
-    modCliente.setContrasena(scanner.nextLine());
-    modCliente.setActivo(true);
-    break;
-    }
-    return modCliente;
 }
-
-
 
 }
     

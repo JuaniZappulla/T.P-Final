@@ -75,15 +75,6 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
         return categoria;
     }
 
-    public void finalizarCompra()
-    {
-    	boolean pago = true;
-    	setActivo(pago);
-    }
-   
-    
-    
-    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

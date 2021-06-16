@@ -71,7 +71,6 @@ public abstract class Usuario implements Serializable {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
