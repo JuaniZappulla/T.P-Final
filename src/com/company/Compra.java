@@ -66,6 +66,33 @@ public class Compra extends Producto{
 
 		return flag;
 	}
+	
+	public Producto buscarPorNombre(String nombreProducto)
+	{
+
+		int i=0;
+		int flag=-1;
+		Producto unProducto= new Producto();
+		unProducto=null;
+		while(i<listaCompras.size()&& flag==-1)
+		{
+
+			unProducto= listaCompras.get(i);
+
+			if(unProducto.getNombreProducto().equals(nombreProducto))
+			{
+
+				flag=1;
+
+			}
+			else
+			{
+				i++;
+			}
+		}
+		return unProducto;
+	}
+
 
 
 

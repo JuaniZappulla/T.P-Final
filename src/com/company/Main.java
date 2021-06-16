@@ -3,6 +3,8 @@ package com.company;
 import exceptions.CargaProductoException;
 import java.util.Scanner;
 
+
+
 public class Main {
 
     public static Scanner scanner;
@@ -17,6 +19,8 @@ public class Main {
         cargarAdmins(superMerca);
         System.out.println("SuperMercado " + superMerca.getNombreSupermercado());
         Usuario usr = Login(superMerca);
+        
+        Cliente datosCliente= new Cliente();
         if (usr instanceof Admin){
             do{
                 menuAdmin();
@@ -76,8 +80,30 @@ public class Main {
                 	 muestraPorCategoria(superMerca);
                 	 break;
                  case 3:
-                	 System.out.println("por terminar");
+                	 realizarCompra();
                 	 break;
+                 case 4:
+                	 
+                	 Carrito<Compra>ProcesoCompras= new Carrito<>();
+                	 System.out.println(ProcesoCompras.mostrarCarrito());
+                	 
+                	 break;
+                 case 5:
+                	
+                    System.out.println(datosCliente.getHistorialCompras());
+                	 break;
+                 case 6:
+                	 finCompra(superMerca);
+                	 break;
+                 case 7:
+                	 System.out.println("en proceso...");
+                	
+                	 break;
+                 case 8:
+                	 
+                	 break;
+                	 
+                	 
              }
         }
         lye.grabaClientes(superMerca.getUsuarios(), superMerca);
@@ -350,18 +376,30 @@ public class Main {
     	{
     		unProducto.setPago(false);
     	}
-    }/*
-    public static void realizarCompra(Supermercado mercado)
+    }
+    public static void realizarCompra()///falta probar 
     {
     	Carrito<Producto> unProducto= new Carrito<>();
-    	int idProducto=0;
-       
-        mercado.muestraProductos();
-    	System.out.println("ingrese el id del producto a comprar:");
-    	idProducto=scanner.nextInt();
     	
-       Producto produc1= mercado.;///falta terminar
-    	unProducto.agregarCarrito();
+    	Compra compraProducto= new Compra();
+    	String nombreProducto;
+       System.out.println("ingrese el procuto que dese comprar:");
+       nombreProducto= scanner.next();
+      compraProducto=(Compra) compraProducto.buscarPorNombre(nombreProducto);
+      if( compraProducto!=null)
+      {
+    	  unProducto.agregarCarrito(compraProducto);
+      }
+      else
+      {
+    	  System.out.println("el producto elegido no existe");
+      }
     }
-*/
+public static Usuario modificarDatos(Supermercado mercado)
+{
+	Cliente modCliente = new Cliente();
+	///falta terminar 
+	
+	return modCliente;
+}
 }
