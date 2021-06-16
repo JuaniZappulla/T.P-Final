@@ -98,7 +98,7 @@ public class Main {
         System.out.println("Login");
         System.out.println("Usuario");
         usuario = scanner.nextLine();
-        System.out.println("Contraseña");
+        System.out.println("ContraseÃ±a");
         contrasena = scanner.nextLine();
         usr = mercado.buscarUsuarioLogin(usuario, contrasena);
         if (usr != null) {
@@ -106,7 +106,7 @@ public class Main {
             System.out.println("Bienvenido " + usr.getNombre());
         }
         else{
-            System.out.println("Usuario o Contraseña incorrectos!!");
+            System.out.println("Usuario o ContraseÃ±a incorrectos!!");
             do {
                 System.out.println("Desea crear un nuevo usuario? S/N");
                 opc = scanner.nextLine().charAt(0);
@@ -155,7 +155,7 @@ public class Main {
                 cliente.setUsuario(usuario);
             }
         }while (mercado.buscarPorNombreUsuarioLogin(usuario));
-        System.out.println("contraseña: ");
+        System.out.println("contraseÃ±a: ");
         cliente.setContrasena(scanner.nextLine());
         cliente.setActivo(true);
         return cliente;
@@ -163,7 +163,9 @@ public class Main {
 
     public static void cargarAdmins (Supermercado mercado){
         Usuario admin1 = new Admin("Juan Ignacio", "Zappulla", "41928220", "juani99", "8914122", "Jefe");
+        Usuario admin2= new Admin("Nahuel Ariel","Zamudio","41542799","nahuel98","741852","jefe2");
         mercado.nuevoUsuario(admin1);
+        mercado.nuevoUsuario(admin2);
     }
 
     public static void nuevoProducto (Supermercado mercado) {
@@ -213,7 +215,7 @@ public class Main {
         idProducto = scanner.nextInt();
         flag = mercado.BuscaProducto(idProducto);
         if (!flag){
-            System.out.println("ERROR, ID INCORRECTO O SE DESACTIVÓ EL PRODUCTO");
+            System.out.println("ERROR, ID INCORRECTO O SE DESACTIVÃ“ EL PRODUCTO");
         }
         else{
             System.out.println("Ingrese cantidad para reestockear");
@@ -235,7 +237,7 @@ public class Main {
         idProducto = scanner.nextInt();
         flag = mercado.bajaDeProducto(idProducto);
         if (!flag){
-            System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÁ DESACTIVADO");
+            System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÃ� DESACTIVADO");
         }
         else{
             System.out.println("PRODUCTO DADO DE BAJA CON EXITO");
@@ -251,7 +253,7 @@ public class Main {
         idProducto = scanner.nextInt();
         flag = mercado.altaDeProducto(idProducto);
         if (!flag){
-            System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÁ DADO DE ALTA");
+            System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÃ� DADO DE ALTA");
         }
         else{
             System.out.println("PRODUCTO DADO DE ALTA CON EXITO");
@@ -265,7 +267,7 @@ public class Main {
         dni = scanner.nextLine();
         flag = mercado.bajaDeCliente(dni);
         if (!flag){
-            System.out.println("ERROR, EL CLIENTE NO SE ENCUENTRA O YA ESTÁ DADO DE BAJA");
+            System.out.println("ERROR, EL CLIENTE NO SE ENCUENTRA O YA ESTÃ� DADO DE BAJA");
         }
         else{
             System.out.println("CLIENTE DADO DE BAJA CON EXITO");
@@ -281,11 +283,46 @@ public class Main {
         dni = scanner.nextLine();
         flag = mercado.altaDeCliente(dni);
         if (!flag){
-            System.out.println("ERROR, EL USUARIO NO SE ENCUENTRA O YA ESTÁ DADO DE ALTA");
+            System.out.println("ERROR, EL USUARIO NO SE ENCUENTRA O YA ESTÃ� DADO DE ALTA");
         }
         else{
             System.out.println("USUARIO DADO DE ALTA CON EXITO");
         }
+    }
+    public static void finCompra(Supermercado mercado)
+    {
+    	int tipoPago=0;
+    	int aux=0;
+    	Carrito<Producto>unProducto=new Carrito<>();
+    	do {
+    	System.out.println("seleccione el metodo de pago: 1) efectivo/n 2) tarjeta");
+    	tipoPago=scanner.nextInt();
+    	if(tipoPago==1)
+    	{
+    		unProducto.setTipoPago("efectivo");
+    	}
+    	else if(tipoPago==2)
+    	{
+    		unProducto.setTipoPago("tarjeta");
+    	}
+    	else
+    	{
+    		System.out.println("el tipo de pago es incorrecto, intente nuevamente");
+    	}
+    	}while(tipoPago==1 || tipoPago==2);
+    	
+    	
+    	System.out.println("el total a pagar es:" +unProducto.getPrecioTotal());
+    	System.out.println("para realizar el pago precione 1, en caso contrario 2");
+    	aux=scanner.nextInt();
+    	if(aux==1)
+    	{
+    		unProducto.setPago(true);
+    	}
+    	else
+    	{
+    		unProducto.setPago(false);
+    	}
     }
 
 }
