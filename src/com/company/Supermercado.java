@@ -251,7 +251,43 @@ public class Supermercado {
         }
         return flag;
     }
-    
-    
+
+    public int buscarProductoNombre(String nombreProducto, Supermercado mercado)
+	{
+
+		int i=0;
+		int flag=-1;
+		
+		Producto unProducto= new Producto();
+		unProducto=null;
+		
+		while(i<mercado.getListadoProductos().size()&& flag==-1)
+		{
+
+			unProducto= mercado.getListadoProductos().get(i);
+           
+			if(unProducto.getNombreProducto().equals(nombreProducto))
+			{
+
+				flag=i;
+
+			}
+			else
+			{
+				i++;
+			}
+		}
+		
+		return flag;
+	}
+
+    public void dejarUnComentario(String nombre, Supermercado mercado,String comentario)
+    {
+    	int i=buscarProductoNombre(nombre, mercado);
+    	
+       listadoProductos.get(i).setComentario(comentario);
+    	
+    	
+    }
 
 }
