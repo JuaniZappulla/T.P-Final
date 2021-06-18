@@ -82,7 +82,9 @@ public class Main {
                         muestraPorCategoria(superMerca);
                         break;
                     case 3:
+                    	
                         realizarCompra(superMerca);
+                    
                         break;
                     case 4:
                         Carrito<Compra> ProcesoCompras = new Carrito<>();
@@ -374,8 +376,9 @@ public class Main {
     	else
     	{
     		System.out.println("el tipo de pago es incorrecto, intente nuevamente");
+    		tipoPago=0;
     	}
-    	}while(tipoPago==1 || tipoPago==2);
+    	}while(tipoPago==0);
     	
     	
     	System.out.println("el total a pagar es:" +unProducto.getPrecioTotal());
@@ -393,34 +396,57 @@ public class Main {
 
     public static void realizarCompra(Supermercado supermercado)///falta probar 
     {//se rompe al cargar el segundo pedido 
-    	Carrito<Producto> unProducto= new Carrito<>();
+    	Carrito<Compra> unProducto= new Carrito<>();
     	Producto producto1= new Producto();
     	Compra compraProducto= new Compra();
     	String nombreProducto;
+        int cantidad=0;
+        
     
     System.out.println(supermercado.muestraProductos());
-    char continuar = 's';//1 contunuar, 0 finalizar
-    do {
-    	producto1=null;
-       System.out.println("ingrese el procuto que dese comprar:");
+    char continuar;//1 contunuar, 0 finalizar
+   do {
+    	
+       System.out.println("ingrese el procuto que desee comprar:");
        nombreProducto= scanner.nextLine();
        
-      producto1= compraProducto.buscarPorNombre(nombreProducto, supermercado);
-
+      producto1= compraProducto.buscaUnProducto(nombreProducto, supermercado);
+  
      if( producto1!=null)
       {
-    	  unProducto.agregarCarrito(producto1);
+    	  System.out.println("indique la cantidad a comprar:");
+    	  cantidad=scanner.nextInt();
+    	  scanner.nextLine();
+    	 if( supermercado.controlStrockProducto(producto1.getIdProducto(), cantidad))
+    	 {
+    		
+    		 System.out.println("cargado con exito");
+    		 compraProducto.setCantidad(cantidad);
+    		 compraProducto.precioTotal(producto1.getPrecioProducto(), cantidad);
+    		 compraProducto.agregarCompra(producto1);
+    		 
+    		 unProducto.agregarCarrito(compraProducto);
+    	 }
+    	 else
+    	 {
+    		 System.out.println("no ahi stock suficiente");
+    	 }
       }
       else
       {
     	  System.out.println("el producto elegido no existe");
       }
     
-    System.out.println("desea continuar: s/n ");
-	continuar= scanner.next().charAt(0);
-	}while(continuar == 's');
+      System.out.println("desea continuar: s/n ");
+      continuar= scanner.nextLine().charAt(0);
+      }while(continuar == 's');
    
     }
+    
+    
+    
+    
+    
 public static void modificarDatos(Supermercado mercado, Usuario usr) {
 	int opc;
 	System.out.println("seleccione el dato a modificar:");
