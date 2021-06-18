@@ -2,10 +2,7 @@ package com.company;
 
 import exceptions.CargaProductoException;
 
-
 import java.util.Scanner;
-
-
 
 public class Main {
 
@@ -82,9 +79,7 @@ public class Main {
                         muestraPorCategoria(superMerca);
                         break;
                     case 3:
-                    	
                         realizarCompra(superMerca);
-                    
                         break;
                     case 4:
                         Carrito<Compra> ProcesoCompras = new Carrito<>();
@@ -417,14 +412,12 @@ public class Main {
     	  System.out.println("indique la cantidad a comprar:");
     	  cantidad=scanner.nextInt();
     	  scanner.nextLine();
-    	 if( supermercado.controlStrockProducto(producto1.getIdProducto(), cantidad))
+    	 if(supermercado.controlStrockProducto(producto1.getIdProducto(), cantidad))
     	 {
-    		
     		 System.out.println("cargado con exito");
     		 compraProducto.setCantidad(cantidad);
     		 compraProducto.precioTotal(producto1.getPrecioProducto(), cantidad);
     		 compraProducto.agregarCompra(producto1);
-    		 
     		 unProducto.agregarCarrito(compraProducto);
     	 }
     	 else
@@ -440,7 +433,6 @@ public class Main {
       System.out.println("desea continuar: s/n ");
       continuar= scanner.nextLine().charAt(0);
       }while(continuar == 's');
-      System.setOut("hola");
     }
     
     

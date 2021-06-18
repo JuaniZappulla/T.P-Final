@@ -286,8 +286,22 @@ public class Supermercado {
     	int i=buscarProductoNombre(nombre, mercado);
     	
        listadoProductos.get(i).setComentario(comentario);
-    	
-    	
+
     }
 
+    public boolean controlStrockProducto (int idProducto, int cantidad) {
+        boolean flag = false;
+        int aux = 0;
+        for (Producto producto : listadoProductos) {
+            if (producto.getIdProducto() == idProducto) {
+                if (cantidad <= producto.getStockProducto()) {
+                    aux = producto.getStockProducto() - cantidad;
+                    producto.setStockProducto(aux);
+                    flag = true;
+                }
+            }
+
+        }
+        return flag;
+    }
 }

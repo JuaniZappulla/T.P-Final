@@ -171,22 +171,20 @@ public class Compra extends Producto{
 
 	///Precio del total
 
-	public double precioTotal(int idProducto,int cantidad)
+	public void precioTotal(double precioProducto , int cantidad)
 	{
-		double precioAPagar=0;
-		double precio=0;
-
-		precio=buscarPorId(idProducto);
-
-		if(precio!=-1)
-		{
-			precioAPagar= precio * cantidad;
-
-		}
-
-		return precioAPagar;//si retorna 0, el producto el id es incorrecto;
+		precioTotal = precioProducto * cantidad;
 	}
 
+	public Producto buscaUnProducto (String nombreProducto, Supermercado mercado){
+		Producto aux = new Producto();
+		for (Producto producto : mercado.getListadoProductos()){
+			if (producto.getNombreProducto().equals(nombreProducto)){
+				aux = producto;
+			}
+		}
+		return aux;
+	}
 
 
 
