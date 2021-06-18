@@ -115,6 +115,7 @@ public class Carrito<T> {
 			}
 			return builder.toString();
 		}
+
 	//obtener el total a pagar con el descuento
 
 	 public double getPrecioTotal() {
@@ -139,6 +140,7 @@ public class Carrito<T> {
 		 return aplicarDescuento;
 	 }
 
+
 	@Override
 	public String toString() {
 		return "Carrito{" +
@@ -146,8 +148,8 @@ public class Carrito<T> {
 				", fecha=" + fecha +
 				", tipoPago='" + tipoPago + '\'' +
 				", isPago=" + isPago +
-				", descuento=" + descuento +
-				", productos=" + lista +
+				", descuento=" + descuento + "\n" +
+				"productos=" + mostrarCarrito() +
 				'}';
 	}
 }

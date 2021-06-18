@@ -18,9 +18,9 @@ public class Main {
         cargarAdmins(superMerca);
         System.out.println("SuperMercado " + superMerca.getNombreSupermercado());
         Usuario usr = Login(superMerca);
-        
         Cliente datosCliente= new Cliente();
         Carrito<Compra>compra = new Carrito<>();
+
         if (usr instanceof Admin){
             do{
                 menuAdmin();
@@ -393,9 +393,10 @@ public class Main {
     	}while(tipoPago==0);
     	
     	
-    	System.out.println("el total a pagar es:" +unProducto.getPrecioTotal());
+    	System.out.println("el total a pagar es:" + unProducto.getPrecioTotal());
     	System.out.println("para realizar el pago precione 1, en caso contrario 2");
     	aux=scanner.nextInt();
+
     	if(aux==1)
     	{
     		unProducto.setPago(true);
@@ -404,31 +405,35 @@ public class Main {
     	{
     		unProducto.setPago(false);
     	}
+
     }
 
     public static Carrito<Compra> realizarCompra(Supermercado supermercado){
         Carrito<Compra> carrito= new Carrito<>();
-    	Producto producto;
-    	Compra compraProducto = new Compra();
-    	String nombreProducto;
+        Compra compraProducto;
+        Producto producto;
+        String nombreProducto;
         int cantidad;
-        System.out.println(supermercado.muestraProductosParaCliente());
+        boolean controlStock;
         char continuar;
+        System.out.println(supermercado.muestraProductosParaCliente());
         do {
             System.out.println("ingrese el procuto que desee comprar:");
             nombreProducto= scanner.nextLine();
+            compraProducto = new Compra();
             producto = compraProducto.buscaUnProducto(nombreProducto, supermercado);
             if(producto != null){
                 if (producto.isActivo()){
                     System.out.println("indique la cantidad a comprar:");
                     cantidad=scanner.nextInt();
                     scanner.nextLine();
-                    if(supermercado.controlStrockProducto(producto.getIdProducto(), cantidad)) {
-                        System.out.println("cargado con exito");
+                    controlStock = supermercado.controlStrockProducto(producto.getIdProducto(), cantidad);
+                    if(controlStock){
                         compraProducto.setCantidad(cantidad);
                         compraProducto.precioTotal(producto.getPrecioProducto(), cantidad);
                         compraProducto.setProducto(producto);
                         carrito.agregarCarrito(compraProducto);
+                        System.out.println("cargado con exito");
                     }
                     else{
                         System.out.println("no ahi stock suficiente");
@@ -446,72 +451,68 @@ public class Main {
         }while(continuar == 's');
         return carrito;
     }
-    
-    
-    
-    
-    
-public static void modificarDatos(Supermercado mercado, Usuario usr) {
-	int opc;
-	System.out.println("seleccione el dato a modificar:");
-	System.out.println(" 1. nombre\n 2. apellido\n 3. dni\n 4. E-Mail\n 5.localidad\n 6.categoria\n 7. idUsuario\n 8.contraseña\n ELIJA UNA OPCION:");
-	opc = scanner.nextInt();
-    scanner.nextLine();
-    System.out.println("opcion elegida: "+opc);
-    boolean flag = false;
-    String usuario;
-        switch (opc) {
-            case 1:
-                System.out.println("Nombre: ");
-                usr.setNombre(scanner.nextLine());
-                break;
-            case 2:
-                System.out.println("Apellido: ");
-                usr.setApellido(scanner.nextLine());
-                break;
-            case 3:
-                System.out.println("DNI");
-                usr.setDni(scanner.nextLine());
-                break;
-            case 4:
-                do {
-                    System.out.println("E-Mail");
-                    ((Cliente) usr).setMailUsuario(scanner.nextLine());
-                    if (((Cliente) usr).getMailCliente().contains("@")){
-                        flag = true;
-                    }else{
-                        System.out.println("Error, mail no valido, reintente...");
-                     }
-                } while (!flag);
-                break;
-            case 5:
-                System.out.println("Localidad: ");
-                ((Cliente) usr).setLocalidadCliente(scanner.nextLine());
-                break;
-            case 6:
-                System.out.println("Categoria: ");
-                ((Cliente) usr).setCategoria(scanner.nextLine());
-                break;
-            case 7:
-                do {
-                    System.out.println("Nombre de usuario: ");
-                    usuario = scanner.nextLine();
-                    if (mercado.buscarPorNombreUsuarioLogin(usuario)) {
-                        System.out.println("Error, usuario ya registrado.");
-                    } else {
-                        usr.setUsuario(usuario);
-                    }
-                } while (mercado.buscarPorNombreUsuarioLogin(usuario));
-                break;
-            case 8:
-                System.out.println("contraseÃ±a: ");
-                usr.setContrasena(scanner.nextLine());
-                ((Cliente) usr).setActivo(true);
-                break;
-        }
-}
-public static void comentar(Supermercado mercado)
-{
+
+    public static void modificarDatos(Supermercado mercado, Usuario usr) {
+        int opc;
+        System.out.println("seleccione el dato a modificar:");
+        System.out.println(" 1. nombre\n 2. apellido\n 3. dni\n 4. E-Mail\n 5.localidad\n 6.categoria\n 7. idUsuario\n 8.contraseña\n ELIJA UNA OPCION:");
+        opc = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("opcion elegida: "+opc);
+        boolean flag = false;
+        String usuario;
+            switch (opc) {
+                case 1:
+                    System.out.println("Nombre: ");
+                    usr.setNombre(scanner.nextLine());
+                    break;
+                case 2:
+                    System.out.println("Apellido: ");
+                    usr.setApellido(scanner.nextLine());
+                    break;
+                case 3:
+                    System.out.println("DNI");
+                    usr.setDni(scanner.nextLine());
+                    break;
+                case 4:
+                    do {
+                        System.out.println("E-Mail");
+                        ((Cliente) usr).setMailUsuario(scanner.nextLine());
+                        if (((Cliente) usr).getMailCliente().contains("@")){
+                            flag = true;
+                        }else{
+                            System.out.println("Error, mail no valido, reintente...");
+                         }
+                    } while (!flag);
+                    break;
+                case 5:
+                    System.out.println("Localidad: ");
+                    ((Cliente) usr).setLocalidadCliente(scanner.nextLine());
+                    break;
+                case 6:
+                    System.out.println("Categoria: ");
+                    ((Cliente) usr).setCategoria(scanner.nextLine());
+                    break;
+                case 7:
+                    do {
+                        System.out.println("Nombre de usuario: ");
+                        usuario = scanner.nextLine();
+                        if (mercado.buscarPorNombreUsuarioLogin(usuario)) {
+                            System.out.println("Error, usuario ya registrado.");
+                        } else {
+                            usr.setUsuario(usuario);
+                        }
+                    } while (mercado.buscarPorNombreUsuarioLogin(usuario));
+                    break;
+                case 8:
+                    System.out.println("contraseÃ±a: ");
+                    usr.setContrasena(scanner.nextLine());
+                    ((Cliente) usr).setActivo(true);
+                    break;
+            }
+    }
+
+    public static void comentar(Supermercado mercado){
 	String nombre, comentario;
 	System.out.println("ingrese el nombre del producto");
 	nombre=scanner.nextLine();

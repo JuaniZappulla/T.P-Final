@@ -104,7 +104,7 @@ public class Compra{
 
 	@Override
 	public String toString() {
-		return getProducto() + "Cantidad: " + getCantidad() + "Precio: " + getPrecioTotal();
+		return getProducto() + "Cantidad: " + getCantidad() + " Precio: " + getPrecioTotal();
 	}
 
 	///Precio del total
