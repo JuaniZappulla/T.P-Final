@@ -9,7 +9,7 @@ public class Main {
     public static Scanner scanner;
 
     public static void main(String[] args){
-        int opc;
+        int opc, opcCompra;
         scanner = new Scanner(System.in);
         lecturaEscritura lye = new lecturaEscritura();
         Supermercado superMerca = new Supermercado("La Super Merca");
@@ -20,6 +20,7 @@ public class Main {
         Usuario usr = Login(superMerca);
         
         Cliente datosCliente= new Cliente();
+        Carrito<Compra>compra = new Carrito<>();
         if (usr instanceof Admin){
             do{
                 menuAdmin();
@@ -73,44 +74,54 @@ public class Main {
                 scanner.nextLine();
                 switch (opc) {
                     case 1:
-                        System.out.println(superMerca.muestraProductos());
-                        break;
-                    case 2:
-                        muestraPorCategoria(superMerca);
-                        break;
-                    case 3:
-                        realizarCompra(superMerca);
-                        break;
-                    case 4:
-
-                        break;
-                    case 5:
-                        System.out.println(datosCliente.getHistorialCompras());
-                        break;
-                    case 6:
-                        finCompra(superMerca);
-                        break;
-                    case 7:
-                        System.out.println("en proceso...");
-                        break;
-                    case 8:
                         modificarDatos(superMerca, usr);
                         break;
-                    case 9:
+                    case 2:
                         System.out.println(usr);
                         break;
-                    case 10:
-                    	bajaCliente(superMerca);
-                    	break;
-                    case 11:
-                    	System.out.println("ingrese el producto a buscar:");
-                    	String nombre=scanner.nextLine(); 
+                    case 3:
+                        do{
+                            menuCompra();
+                            opcCompra = scanner.nextInt();
+                            scanner.nextLine();
+                            switch (opcCompra){
+                                case 1:
+                                    System.out.println(superMerca.muestraProductos());
+                                    break;
+                                case 2:
+                                    muestraPorCategoria(superMerca);
+                                    break;
+                                case 3:
+                                    compra = realizarCompra(superMerca);
+                                    break;
+                                case 4:
+                                    System.out.println(compra);
+                                    break;
+                                case 5:
+                                    finCompra(superMerca);
+                                    break;
+                                case 6:
+
+                                    break;
+                                case 7:
+                                    System.out.println(datosCliente.getHistorialCompras());
+                                    break;
+                                case 8:
+                                    break;
+                            }
+                        }while (opcCompra != 0);
+                        break;
+                    case 4:
+                        bajaCliente(superMerca);
+                        break;
+                    case 5:
+                        System.out.println("ingrese el producto a buscar:");
+                        String nombre=scanner.nextLine();
                         System.out.println(superMerca.buscaUnSoloProducto(nombre));
                         break;
-                    case 12:
-                    	comentar(superMerca);
-                    	break;
-                    	
+                    case 6:
+                        comentar(superMerca);
+                        break;
                 }
             }while (opc != 0);
         }
@@ -137,19 +148,26 @@ public class Main {
 
     public static void menuCliente (){
         System.out.println("MENU CLIENTE");
+        System.out.println("1. MODIFICAR DATOS PERSONALES");
+        System.out.println("2. VER CLIENTE ACTUAL");
+        System.out.println("3. COMPRAR");
+        System.out.println("4. DAR DEBAJA LA CUENTA");
+        System.out.println("5. BUSCAR UN PRODUCTO EN ESPECIFICO");
+        System.out.println("6. DEJAR UN COMENTARIO DEL PRODUCTO");
+        System.out.println("0. SALIR");
+        System.out.println("SELECCIONE UNA OPCION: ");
+    }
+
+    public static void menuCompra (){
+        System.out.println("MENU COMPRA");
         System.out.println("1. VER LISTA PRODUCTOS");
         System.out.println("2. VER LISTA DE PRODUCTOS POR CATEGORIA");
         System.out.println("3. CARGAR PRODUCTO AL CARRITO");
-        System.out.println("4.VER CARRITO");
-        System.out.println("5.VER HISTORIAL DE COMPRA");
-        System.out.println("6.FINALIZAR PEDIDO");
-        System.out.println("7.CANCELAR PEDIDO");///SE PODRIA MODIFICAR
-        System.out.println("8.MODIFICAR DATOS PERSONALES");
-        System.out.println("9. VER CLIENTE ACTUAL");
-        System.out.println("10.DAR DEBAJA LA CUENTA");
-        System.out.println("11. BUSCAR UN PRODUCTO EN ESPECIFICO");
-        System.out.println("12. DEJAR UN COMENTARIO DEL PRODUCTO");
-        System.out.println("0. SALIR");
+        System.out.println("4. VER CARRITO");
+        System.out.println("5. FINALIZAR PEDIDO");
+        System.out.println("6. CANCELAR PEDIDO");
+        System.out.println("7. VER HISTORIAL DE COMPRA");///SE PODRIA MODIFICAR
+        System.out.println("0. ATRAS");
         System.out.println("SELECCIONE UNA OPCION: ");
     }
 
@@ -160,7 +178,7 @@ public class Main {
         System.out.println("Login");
         System.out.println("Usuario");
         usuario = scanner.nextLine();
-        System.out.println("ContraseÃ±a");
+        System.out.println("Contraseña");
         contrasena = scanner.nextLine();
         usr = mercado.buscarUsuarioLogin(usuario, contrasena);
         if (usr != null) {
@@ -217,7 +235,7 @@ public class Main {
                 cliente.setUsuario(usuario);
             }
         }while (mercado.buscarPorNombreUsuarioLogin(usuario));
-        System.out.println("contraseÃ±a: ");
+        System.out.println("contraseña: ");
         cliente.setContrasena(scanner.nextLine());
         cliente.setActivo(true);
         return cliente;
@@ -351,10 +369,10 @@ public class Main {
             System.out.println("USUARIO DADO DE ALTA CON EXITO");
         }
     }
-    public static void finCompra(Supermercado mercado)
-    {
-    	int tipoPago=0;
-    	int aux=0;
+
+    public static void finCompra(Supermercado mercado){
+    	int tipoPago;
+    	int aux;
     	Carrito<Producto>unProducto=new Carrito<>();
     	do {
     	System.out.println("seleccione el metodo de pago: 1) efectivo/n 2) tarjeta");
@@ -388,34 +406,36 @@ public class Main {
     	}
     }
 
-    public static void realizarCompra(Supermercado supermercado){
-    	Carrito<Compra> carrito= new Carrito<>();
+    public static Carrito<Compra> realizarCompra(Supermercado supermercado){
+        Carrito<Compra> carrito= new Carrito<>();
     	Producto producto;
-    	Compra compraProducto= new Compra();
+    	Compra compraProducto = new Compra();
     	String nombreProducto;
         int cantidad;
-        System.out.println(supermercado.muestraProductos());
+        System.out.println(supermercado.muestraProductosParaCliente());
         char continuar;
         do {
             System.out.println("ingrese el procuto que desee comprar:");
             nombreProducto= scanner.nextLine();
-            producto= compraProducto.buscaUnProducto(nombreProducto, supermercado);
-            System.out.println(producto.toString());
-            if(producto!=null){
-                System.out.println("indique la cantidad a comprar:");
-                cantidad=scanner.nextInt();
-                scanner.nextLine();
-                if(supermercado.controlStrockProducto(producto.getIdProducto(), cantidad)) {
-                    System.out.println("cargado con exito");
-                    compraProducto.setCantidad(cantidad);
-                    compraProducto.precioTotal(producto.getPrecioProducto(), cantidad);
-                    compraProducto.setProducto(producto);
-                    carrito.agregarCarrito(compraProducto);
-                    System.out.println("Muestra Carrito");
-                    System.out.println(carrito.toString());
+            producto = compraProducto.buscaUnProducto(nombreProducto, supermercado);
+            if(producto != null){
+                if (producto.isActivo()){
+                    System.out.println("indique la cantidad a comprar:");
+                    cantidad=scanner.nextInt();
+                    scanner.nextLine();
+                    if(supermercado.controlStrockProducto(producto.getIdProducto(), cantidad)) {
+                        System.out.println("cargado con exito");
+                        compraProducto.setCantidad(cantidad);
+                        compraProducto.precioTotal(producto.getPrecioProducto(), cantidad);
+                        compraProducto.setProducto(producto);
+                        carrito.agregarCarrito(compraProducto);
+                    }
+                    else{
+                        System.out.println("no ahi stock suficiente");
+                    }
                 }
                 else{
-                    System.out.println("no ahi stock suficiente");
+                    System.out.println("error, el producto fue dado de baja");
                 }
             }
             else{
@@ -424,6 +444,7 @@ public class Main {
             System.out.println("desea continuar: s/n ");
             continuar= scanner.nextLine().charAt(0);
         }while(continuar == 's');
+        return carrito;
     }
     
     

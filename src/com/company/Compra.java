@@ -6,7 +6,6 @@ public class Compra{
 	private Producto producto;
 	private int cantidad;
 	private double precioTotal;
-	//private ArrayList<Producto> listaCompras;
 
 	public Compra() {
 
@@ -16,50 +15,21 @@ public class Compra{
 	 * @param producto
 	 * @param cantidad
 	 * @param precioTotal
-	 * @param listaCompras
 	 */
-	public Compra(Producto producto, int cantidad, double precioTotal, ArrayList<Producto> listaCompras) {
-		super();
+	public Compra(Producto producto, int cantidad, double precioTotal) {
+
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.precioTotal = precioTotal;
-		//this.listaCompras = listaCompras;
 	}
 
-	///busco por id el producto comprado
-	/*public int buscarPorId(int idProducto)
-	{
-
-		int i=0;
-		int flag=-1;
-		while(i<listaCompras.size()&& flag==-1)
-		{
-
-			Producto unProducto= listaCompras.get(i);
-
-			if(unProducto.getIdProducto()==idProducto)
-			{
-
-				flag=i;
-
-			}
-			else
-			{
-				i++;
-			}
-		}
-
-
-		return flag;
-	}
-	*/
 	public Producto buscarPorNombre(String nombreProducto, Supermercado mercado)
 	{
 
 		int i=0;
 		int flag=-1;
 		
-		Producto unProducto= new Producto();
+		Producto unProducto;
 		unProducto=null;
 		
 		while(i<mercado.getListadoProductos().size()&& flag==-1)
@@ -132,7 +102,6 @@ public class Compra{
 		this.precioTotal = precioTotal;
 	}
 
-
 	@Override
 	public String toString() {
 		return getProducto() + "Cantidad: " + getCantidad() + "Precio: " + getPrecioTotal();
@@ -150,11 +119,8 @@ public class Compra{
 			if (producto.getNombreProducto().equals(nombreProducto)){
 				aux = producto;
 			}
-			///System.out.println("arreglando los cambios");
 		}
 		return aux;
 	}
-
-
 
 }
