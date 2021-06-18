@@ -1,7 +1,8 @@
 package com.company;
 
-import java.math.BigInteger;
+
 import java.util.*;
+
 
 
 
@@ -136,6 +137,10 @@ public class Supermercado {
         }
         return sb.toString();
     }
+    
+    
+    
+    
 
     public Usuario buscarUsuario (String dni){
         Usuario usr = null;
@@ -289,5 +294,22 @@ public class Supermercado {
     	
     	
     }
+    
+   public boolean controlStrockProducto(int idProduc, int cantidad)
+   {
+	      boolean flag = false;
+	      int  aux=0;
+	        for (Producto producto : listadoProductos){
+	            if(producto.getIdProducto() == idProduc){
+	            	if(cantidad<=producto.getStockProducto()) {
+	               aux = producto.getStockProducto()-cantidad;
+	               producto.setStockProducto(aux);
+	               flag = true;
+	            	}
+	            }
+	        }
+	        return flag;
+  }
+   
 
 }
