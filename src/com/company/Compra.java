@@ -182,6 +182,7 @@ public class Compra extends Producto{
 			if (producto.getNombreProducto().equals(nombreProducto)){
 				aux = producto;
 			}
+			///System.out.println("arreglando los cambios");
 		}
 		return aux;
 	}
