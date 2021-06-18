@@ -82,8 +82,7 @@ public class Main {
                         realizarCompra(superMerca);
                         break;
                     case 4:
-                        Carrito<Compra> ProcesoCompras = new Carrito<>();
-                        System.out.println(ProcesoCompras.mostrarCarrito());
+
                         break;
                     case 5:
                         System.out.println(datosCliente.getHistorialCompras());
@@ -389,50 +388,42 @@ public class Main {
     	}
     }
 
-    public static void realizarCompra(Supermercado supermercado)///falta probar 
-    {//se rompe al cargar el segundo pedido 
-    	Carrito<Compra> unProducto= new Carrito<>();
-    	Producto producto1= new Producto();
+    public static void realizarCompra(Supermercado supermercado){
+    	Carrito<Compra> carrito= new Carrito<>();
+    	Producto producto;
     	Compra compraProducto= new Compra();
     	String nombreProducto;
-        int cantidad=0;
-        
-    
-    System.out.println(supermercado.muestraProductos());
-    char continuar;//1 contunuar, 0 finalizar
-   do {
-    	
-       System.out.println("ingrese el procuto que desee comprar:");
-       nombreProducto= scanner.nextLine();
-       
-      producto1= compraProducto.buscaUnProducto(nombreProducto, supermercado);
-  
-     if( producto1!=null)
-      {
-    	  System.out.println("indique la cantidad a comprar:");
-    	  cantidad=scanner.nextInt();
-    	  scanner.nextLine();
-    	 if(supermercado.controlStrockProducto(producto1.getIdProducto(), cantidad))
-    	 {
-    		 System.out.println("cargado con exito");
-    		 compraProducto.setCantidad(cantidad);
-    		 compraProducto.precioTotal(producto1.getPrecioProducto(), cantidad);
-    		 compraProducto.agregarCompra(producto1);
-    		 unProducto.agregarCarrito(compraProducto);
-    	 }
-    	 else
-    	 {
-    		 System.out.println("no ahi stock suficiente");
-    	 }
-      }
-      else
-      {
-    	  System.out.println("el producto elegido no existe");
-      }
-    
-      System.out.println("desea continuar: s/n ");
-      continuar= scanner.nextLine().charAt(0);
-      }while(continuar == 's');
+        int cantidad;
+        System.out.println(supermercado.muestraProductos());
+        char continuar;
+        do {
+            System.out.println("ingrese el procuto que desee comprar:");
+            nombreProducto= scanner.nextLine();
+            producto= compraProducto.buscaUnProducto(nombreProducto, supermercado);
+            System.out.println(producto.toString());
+            if(producto!=null){
+                System.out.println("indique la cantidad a comprar:");
+                cantidad=scanner.nextInt();
+                scanner.nextLine();
+                if(supermercado.controlStrockProducto(producto.getIdProducto(), cantidad)) {
+                    System.out.println("cargado con exito");
+                    compraProducto.setCantidad(cantidad);
+                    compraProducto.precioTotal(producto.getPrecioProducto(), cantidad);
+                    compraProducto.setProducto(producto);
+                    carrito.agregarCarrito(compraProducto);
+                    System.out.println("Muestra Carrito");
+                    System.out.println(carrito.toString());
+                }
+                else{
+                    System.out.println("no ahi stock suficiente");
+                }
+            }
+            else{
+                System.out.println("el producto elegido no existe");
+            }
+            System.out.println("desea continuar: s/n ");
+            continuar= scanner.nextLine().charAt(0);
+        }while(continuar == 's');
     }
     
     

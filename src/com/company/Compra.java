@@ -2,24 +2,15 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class Compra extends Producto{
-	private String producto;
+public class Compra{
+	private Producto producto;
 	private int cantidad;
 	private double precioTotal;
-
-
-
-
-	private ArrayList<Producto> listaCompras;
-
+	//private ArrayList<Producto> listaCompras;
 
 	public Compra() {
-		listaCompras= new ArrayList<Producto>();
+
 	}
-
-
-
-
 
 	/**
 	 * @param producto
@@ -27,21 +18,16 @@ public class Compra extends Producto{
 	 * @param precioTotal
 	 * @param listaCompras
 	 */
-	public Compra(String producto, int cantidad, double precioTotal, ArrayList<Producto> listaCompras) {
+	public Compra(Producto producto, int cantidad, double precioTotal, ArrayList<Producto> listaCompras) {
 		super();
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.precioTotal = precioTotal;
-		this.listaCompras = listaCompras;
+		//this.listaCompras = listaCompras;
 	}
 
-
-
-
-
-
 	///busco por id el producto comprado
-	public int buscarPorId(int idProducto)
+	/*public int buscarPorId(int idProducto)
 	{
 
 		int i=0;
@@ -66,7 +52,7 @@ public class Compra extends Producto{
 
 		return flag;
 	}
-	
+	*/
 	public Producto buscarPorNombre(String nombreProducto, Supermercado mercado)
 	{
 
@@ -95,24 +81,8 @@ public class Compra extends Producto{
 		
 		return unProducto;
 	}
-
-
-
-
-
-
-	///puedo agregar un producto a la compra
-	public void agregarCompra(Producto produc)
-	{
-		listaCompras.add(produc);
-	}
-
-
-
-
-
 	///eliminar un producto que se agrego a la compra por error
-	public int  eliminar(int idProducto)
+	/*public int  eliminar(int idProducto)
 	{
 		int flag=-1;
 		int borrar=0;
@@ -124,17 +94,17 @@ public class Compra extends Producto{
 		}
 		return flag;
 	}
-
+*/
 	/**
 	 * @return the producto
 	 */
-	public String getProducto() {
+	public Producto getProducto() {
 		return producto;
 	}
 	/**
 	 * @param producto the producto to set
 	 */
-	public void setProducto(String producto) {
+	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
 	/**
@@ -165,12 +135,10 @@ public class Compra extends Producto{
 
 	@Override
 	public String toString() {
-		return super.toString()+"Compra [getProducto()=" + getProducto() + ", getCantidad()=" + getCantidad() + ", getPrecioTotal()="
-				+ getPrecioTotal() + "]";
+		return getProducto() + "Cantidad: " + getCantidad() + "Precio: " + getPrecioTotal();
 	}
 
 	///Precio del total
-
 	public void precioTotal(double precioProducto , int cantidad)
 	{
 		precioTotal = precioProducto * cantidad;
