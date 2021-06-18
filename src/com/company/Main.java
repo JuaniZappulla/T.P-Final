@@ -440,7 +440,7 @@ public class Main {
       System.out.println("desea continuar: s/n ");
       continuar= scanner.nextLine().charAt(0);
       }while(continuar == 's');
-   
+      System.setOut("hola");
     }
     
     
