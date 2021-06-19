@@ -1,9 +1,12 @@
 package com.company;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Carrito<T> {
+
+
+public class Carrito<T>extends Compra{
  
  	private int idCarrito;
 	private static int id = 0;
@@ -18,6 +21,9 @@ public class Carrito<T> {
 		idCarrito = ++id;
 		fecha = new Date();
 	}
+
+	
+
 
 	/**
 	 * @return the idCarrito
@@ -118,15 +124,17 @@ public class Carrito<T> {
 
 	//obtener el total a pagar con el descuento
 
-	 public double getPrecioTotal() {
+	/*public double getPrecioTotalConDescuento() {
 		 double total=0;
 		 float aplicarDescuento=0;
-
+		Compra aux= new Compra();
 		 for (int i=0;i< lista.size();i++)
 		 {
-
-			 total+= (double)lista.get(i);
-
+          
+			 System.out.println("ddddd"+lista.toString());
+			
+			total+=lista.get(i);
+            
 		 }
 		 if (getTipoPago()=="efectivo")
 		 {
@@ -139,7 +147,7 @@ public class Carrito<T> {
 
 		 return aplicarDescuento;
 	 }
-
+*/
 
 	@Override
 	public String toString() {

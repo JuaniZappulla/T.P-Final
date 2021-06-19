@@ -2,8 +2,11 @@ package com.company;
 
 import Interface.ICategoria;
 
+
 import java.io.Serializable;
 import java.util.HashMap;
+
+
 
 public class Cliente extends Usuario implements Serializable, ICategoria {
 
@@ -86,5 +89,24 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
         sb.append("Contraseña: " + getContrasena());
         return sb.toString();
     }
+    
+
+
+    public void agregarHistorial(Carrito<Compra> lacompra){
+    	
+    	System.out.println("pppppppppppppppppppppppppppppppppppppppppppppppppp"+ lacompra.getIdCarrito());
+       if(historialCompras.containsKey(lacompra.getIdCarrito()))
+    	 {
+    	  System.out.println("no se puede agregar");///borrar
+    	  }
+       else
+       {
+    	   historialCompras.put(lacompra.getIdCarrito(), lacompra);
+    	   
+    	   System.out.println("ingresa???????");
+       }       
+    	
+        }
+    
 
 }

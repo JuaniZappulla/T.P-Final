@@ -4,6 +4,8 @@ import exceptions.CargaProductoException;
 
 import java.util.Scanner;
 
+
+
 public class Main {
 
     public static Scanner scanner;
@@ -20,7 +22,7 @@ public class Main {
         Usuario usr = Login(superMerca);
         Cliente datosCliente= new Cliente();
         Carrito<Compra>compra = new Carrito<>();
-
+       
         if (usr instanceof Admin){
             do{
                 menuAdmin();
@@ -98,7 +100,9 @@ public class Main {
                                     System.out.println(compra);
                                     break;
                                 case 5:
-                                    finCompra(superMerca);
+                                	
+                                   compra=finCompra(superMerca, compra,datosCliente);
+                                    System.out.println(compra);
                                     break;
                                 case 6:
 
@@ -370,10 +374,11 @@ public class Main {
         }
     }
 
-    public static void finCompra(Supermercado mercado){
+    public static Carrito<Compra> finCompra(Supermercado mercado, Carrito<Compra>unProducto, Cliente dato){
     	int tipoPago;
     	int aux;
-    	Carrito<Producto>unProducto=new Carrito<>();
+    	
+    	
     	do {
     	System.out.println("seleccione el metodo de pago: 1) efectivo/n 2) tarjeta");
     	tipoPago=scanner.nextInt();
@@ -393,20 +398,62 @@ public class Main {
     	}while(tipoPago==0);
     	
     	
-    	System.out.println("el total a pagar es:" + unProducto.getPrecioTotal());
+    	System.out.println("el total a pagar es:" + PrecioTotalConDescuento(unProducto));///no anda el getPrecioTotal
     	System.out.println("para realizar el pago precione 1, en caso contrario 2");
     	aux=scanner.nextInt();
 
     	if(aux==1)
     	{
+    		System.out.println("entra al true");
     		unProducto.setPago(true);
+    		System.out.println("esta pago????" + unProducto.isPago());
+//    	dato.agregarHistorial(unProducto.getLista());///no anda el agregar historial
+    	System.out.println("los datos del historial"+ dato.toString());
     	}
     	else
     	{
     		unProducto.setPago(false);
     	}
+    	
+    	System.out.println("se ejecuta");
+    	return unProducto;
 
     }
+    
+    
+	public static double PrecioTotalConDescuento(Carrito<Compra>unProducto) {
+		 double total=0;
+		 float aplicarDescuento=0;
+		float descuentoAplicado=0;
+		 for (int i=0;i<unProducto.getLista().size();i++)
+		 {
+			 
+			total+=unProducto.getLista().get(i).getPrecioTotal();
+          
+		 }
+		 if (unProducto.getTipoPago()=="efectivo")
+		 {
+			 unProducto.setDescuento((float) 0.10);
+			 aplicarDescuento=(float)total*unProducto.getDescuento();
+              descuentoAplicado=(float)total-aplicarDescuento;
+		 }
+		 else {
+			 descuentoAplicado=(float)total;
+		 }
+
+		 return descuentoAplicado;
+	 }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     public static Carrito<Compra> realizarCompra(Supermercado supermercado){
         Carrito<Compra> carrito= new Carrito<>();
