@@ -10,14 +10,18 @@ import java.util.HashMap;
 
 public class Cliente extends Usuario implements Serializable, ICategoria {
 
-    private HashMap<Integer, Carrito> historialCompras;
+    private HashMap<Integer, Carrito<Compra>> historialCompras;
     private String mailCliente;
     private String localidadCliente;
     private boolean isActivo;
     private String categoria;
+    private int idCarrito;
+    private static int id = 0;
 
     public Cliente() {
         setId(getId());
+        historialCompras = new HashMap<>();
+        idCarrito = ++id;
     }
 
     public Cliente(String nombre, String apellido, String dni, String usuario, String contrasena, String mailCliente, String localidadCliente, Boolean isActivo, String categoria) {
@@ -28,13 +32,14 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
         this.localidadCliente = localidadCliente;
         this.isActivo = isActivo;
         setCategoria(categoria);
+        idCarrito = ++id;
     }
 
-    public HashMap<Integer, Carrito> getHistorialCompras() {
+    public HashMap<Integer, Carrito<Compra>> getHistorialCompras() {
         return historialCompras;
     }
 
-    public void setHistorialCompras(HashMap<Integer, Carrito> historialCompras) {
+    public void setHistorialCompras(HashMap<Integer, Carrito<Compra>> historialCompras) {
         this.historialCompras = historialCompras;
     }
 
@@ -73,7 +78,6 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
         this.categoria = categoria;
     }
 
-
     public String getCategoria(){
         return categoria;
     }
@@ -89,12 +93,10 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
         sb.append("Contraseña: " + getContrasena());
         return sb.toString();
     }
-    
-
 
     public void agregarHistorial(Carrito<Compra> lacompra){
-    	
-    	System.out.println("pppppppppppppppppppppppppppppppppppppppppppppppppp"+ lacompra.getIdCarrito());
+    	/*
+        System.out.println("pppppppppppppppppppppppppppppppppppppppppppppppppp"+ lacompra.getIdCarrito());
        if(historialCompras.containsKey(lacompra.getIdCarrito()))
     	 {
     	  System.out.println("no se puede agregar");///borrar
@@ -102,11 +104,11 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
        else
        {
     	   historialCompras.put(lacompra.getIdCarrito(), lacompra);
-    	   
+
     	   System.out.println("ingresa???????");
-       }       
-    	
+       }
+        */
+        historialCompras.put(idCarrito, lacompra);
         }
-    
 
 }

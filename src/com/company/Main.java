@@ -377,8 +377,7 @@ public class Main {
     public static Carrito<Compra> finCompra(Supermercado mercado, Carrito<Compra>unProducto, Cliente dato){
     	int tipoPago;
     	int aux;
-    	
-    	
+
     	do {
     	System.out.println("seleccione el metodo de pago: 1) efectivo/n 2) tarjeta");
     	tipoPago=scanner.nextInt();
@@ -401,14 +400,13 @@ public class Main {
     	System.out.println("el total a pagar es:" + PrecioTotalConDescuento(unProducto));///no anda el getPrecioTotal
     	System.out.println("para realizar el pago precione 1, en caso contrario 2");
     	aux=scanner.nextInt();
-
     	if(aux==1)
     	{
     		System.out.println("entra al true");
     		unProducto.setPago(true);
     		System.out.println("esta pago????" + unProducto.isPago());
-//    	dato.agregarHistorial(unProducto.getLista());///no anda el agregar historial
-    	System.out.println("los datos del historial"+ dato.toString());
+            dato.agregarHistorial(unProducto);///no anda el agregar historial
+    	//System.out.println("los datos del historial"+ dato.toString());
     	}
     	else
     	{
@@ -444,16 +442,6 @@ public class Main {
 		 return descuentoAplicado;
 	 }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     public static Carrito<Compra> realizarCompra(Supermercado supermercado){
         Carrito<Compra> carrito= new Carrito<>();
