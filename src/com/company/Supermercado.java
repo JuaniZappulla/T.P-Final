@@ -273,21 +273,21 @@ public class Supermercado {
     }
 
     public int buscarProductoNombre(String nombreProducto) {
-		int i=0, encontrado =-1;
-		boolean flag = false;
-		Producto unProducto;
-		while(i<listadoProductos.size() && !flag){
-			unProducto = listadoProductos.get(i);
-			if(unProducto.getNombreProducto().equals(nombreProducto) && unProducto.isActivo()) {
-				flag = true;
+        int i=0, encontrado =-1;
+        boolean flag = false;
+        Producto unProducto;
+        while(i<listadoProductos.size() && !flag){
+            unProducto = listadoProductos.get(i);
+            if(unProducto.getNombreProducto().equals(nombreProducto) && unProducto.isActivo()) {
+                flag = true;
                 encontrado = i;
-			}
-			else{
-				i++;
-			}
-		}
-		return encontrado;
-	}
+            }
+            else{
+                i++;
+            }
+        }
+        return encontrado;
+    }
 
     public void dejarUnComentario(String comentario, int i)
     {

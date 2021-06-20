@@ -19,115 +19,114 @@ public class Main {
         Supermercado superMerca = new Supermercado("La Super Merca");
         lee (lye, superMerca);
         cargarAdmins(superMerca);
-        System.out.println("commit");
         System.out.println("SuperMercado " + superMerca.getNombreSupermercado());
         Usuario usr = Login(superMerca);
         Carrito<Compra>compra;
 
-           if (usr instanceof Admin) {
-               do {
-                   menuAdmin();
-                   opc = scanner.nextInt();
-                   scanner.nextLine();
-                   switch (opc) {
-                       case 1:
-                           try {
-                               nuevoProducto(superMerca);
-                           } catch (CargaProductoException e) {
-                               e.getMessage();
-                           }
-                           break;
-                       case 2:
-                           System.out.println(superMerca.muestraProductos());
-                           break;
-                       case 3:
-                           muestraPorCategoria(superMerca);
-                           break;
-                       case 4:
-                           restockearProducto(superMerca);
-                           break;
-                       case 5:
-                           bajaProducto(superMerca);
-                           break;
-                       case 6:
-                           altaProducto(superMerca);
-                           break;
-                       case 7:
-                           System.out.println(usr);
-                           break;
-                       case 8:
-                           System.out.println(superMerca.muestraUsuarios());
-                           break;
-                       case 9:
-                           buscaUsuario(superMerca);
-                           break;
-                       case 10:
-                           bajaCliente(superMerca);
-                           break;
-                       case 11:
-                           altaCliente(superMerca);
-                           break;
-                   }
-               } while (opc != 0);
-           } else if (usr instanceof Cliente) {
-               do {
-                   menuCliente();
-                   opc = scanner.nextInt();
-                   scanner.nextLine();
-                   switch (opc) {
-                       case 1:
-                           modificarDatos(superMerca, usr);
-                           break;
-                       case 2:
-                           System.out.println(usr);
-                           break;
-                       case 3:
-                           compra = new Carrito<>();
-                           do {
-                               menuCompra();
-                               opcCompra = scanner.nextInt();
-                               scanner.nextLine();
-                               switch (opcCompra) {
-                                   case 1:
-                                       System.out.println(superMerca.muestraProductosParaCliente());
-                                       break;
-                                   case 2:
-                                       muestraPorCategoria(superMerca);
-                                       break;
-                                   case 3:
-                                        muestraProducto(superMerca);
-                                       break;
-                                   case 4:
-                                       compra = realizarCompra(superMerca, compra);
-                                       break;
-                                   case 5:
-                                       System.out.println(compra);
-                                       break;
-                                   case 6:
-                                       if (finCompra(compra, usr)){
-                                           compra = new Carrito<>();
-                                       }
-                                       break;
-                                   case 7:
-                                       compra = cancelarCompra();
-                                       System.out.println("COMPRA CANCELADA");
-                                       break;
-                                   case 8:
-                                       System.out.println(((Cliente) usr).muestraHistorialCompras());
-                                       break;
-                               }
-                           } while (opcCompra != 0);
-                           break;
-                       case 4:
-                           bajaClienteCliente (superMerca, lye);
-                           break;
-                       case 5:
-                           comentar(superMerca);
-                           break;
-                   }
-               } while (opc != 0);
-           }
-            graba(lye, superMerca);
+        if (usr instanceof Admin) {
+            do {
+                menuAdmin();
+                opc = scanner.nextInt();
+                scanner.nextLine();
+                switch (opc) {
+                    case 1:
+                        try {
+                            nuevoProducto(superMerca);
+                        } catch (CargaProductoException e) {
+                            e.getMessage();
+                        }
+                        break;
+                    case 2:
+                        System.out.println(superMerca.muestraProductos());
+                        break;
+                    case 3:
+                        muestraPorCategoria(superMerca);
+                        break;
+                    case 4:
+                        restockearProducto(superMerca);
+                        break;
+                    case 5:
+                        bajaProducto(superMerca);
+                        break;
+                    case 6:
+                        altaProducto(superMerca);
+                        break;
+                    case 7:
+                        System.out.println(usr);
+                        break;
+                    case 8:
+                        System.out.println(superMerca.muestraUsuarios());
+                        break;
+                    case 9:
+                        buscaUsuario(superMerca);
+                        break;
+                    case 10:
+                        bajaCliente(superMerca);
+                        break;
+                    case 11:
+                        altaCliente(superMerca);
+                        break;
+                }
+            } while (opc != 0);
+        } else if (usr instanceof Cliente) {
+            do {
+                menuCliente();
+                opc = scanner.nextInt();
+                scanner.nextLine();
+                switch (opc) {
+                    case 1:
+                        modificarDatos(superMerca, usr);
+                        break;
+                    case 2:
+                        System.out.println(usr);
+                        break;
+                    case 3:
+                        compra = new Carrito<>();
+                        do {
+                            menuCompra();
+                            opcCompra = scanner.nextInt();
+                            scanner.nextLine();
+                            switch (opcCompra) {
+                                case 1:
+                                    System.out.println(superMerca.muestraProductosParaCliente());
+                                    break;
+                                case 2:
+                                    muestraPorCategoria(superMerca);
+                                    break;
+                                case 3:
+                                    muestraProducto(superMerca);
+                                    break;
+                                case 4:
+                                    compra = realizarCompra(superMerca, compra);
+                                    break;
+                                case 5:
+                                    System.out.println(compra);
+                                    break;
+                                case 6:
+                                    if (finCompra(compra, usr)){
+                                        compra = new Carrito<>();
+                                    }
+                                    break;
+                                case 7:
+                                    compra = cancelarCompra();
+                                    System.out.println("COMPRA CANCELADA");
+                                    break;
+                                case 8:
+                                    System.out.println(((Cliente) usr).muestraHistorialCompras());
+                                    break;
+                            }
+                        } while (opcCompra != 0);
+                        break;
+                    case 4:
+                        bajaClienteCliente (superMerca, lye);
+                        break;
+                    case 5:
+                        comentar(superMerca);
+                        break;
+                }
+            } while (opc != 0);
+        }
+        graba(lye, superMerca);
     }
 
     public static void graba(lecturaEscritura lye, Supermercado superMerca){
@@ -434,8 +433,8 @@ public class Main {
     }
 
     public static boolean finCompra(Carrito<Compra>carrito, Usuario usr){
-    	int tipoPago;
-    	int aux;
+        int tipoPago;
+        int aux;
         DecimalFormat formato = new DecimalFormat("#.##");
 
         if (carrito.mostrarCarrito().length() > 0){
@@ -484,46 +483,46 @@ public class Main {
         return false;
     }
 
-	public static double PrecioTotalConDescuento(Carrito<Compra>unProducto) {
-		 double total=0;
-		 double aplicarDescuento=0;
-		 double descuentoAplicado=0;
-		 for (int i=0;i<unProducto.getLista().size();i++)
-		 {
-			 
-			total+=unProducto.getLista().get(i).getPrecioTotal();
-          
-		 }
-		 if (unProducto.getTipoPago().equals("Efectivo"))
-		 {
-			 unProducto.setDescuento(0.10);
-			 aplicarDescuento = total * unProducto.getDescuento();
-			 descuentoAplicado = total - aplicarDescuento;
-		 }
-		 else if (unProducto.getTipoPago().equals("Tarjeta Credito")){
-             unProducto.setDescuento(0.15);
-             aplicarDescuento = total * unProducto.getDescuento();
-             descuentoAplicado = total + aplicarDescuento;
-         }
-		 else if (unProducto.getTipoPago().equals("Tarjeta Debito")){
-             unProducto.setDescuento(0.10);
-             aplicarDescuento = total * unProducto.getDescuento();
-             descuentoAplicado = total - aplicarDescuento;
-         }
-		 else if (unProducto.getTipoPago().equals("MercadoPago")) {
-             unProducto.setDescuento(0.20);
-             aplicarDescuento = total * unProducto.getDescuento();
-             descuentoAplicado = total + aplicarDescuento;
-         }
-		 else {
-			 descuentoAplicado=(float)total;
-		 }
-		 return descuentoAplicado;
-	 }
+    public static double PrecioTotalConDescuento(Carrito<Compra>unProducto) {
+        double total=0;
+        double aplicarDescuento=0;
+        double descuentoAplicado=0;
+        for (int i=0;i<unProducto.getLista().size();i++)
+        {
 
-	 public static Carrito<Compra> cancelarCompra(){
+            total+=unProducto.getLista().get(i).getPrecioTotal();
+
+        }
+        if (unProducto.getTipoPago().equals("Efectivo"))
+        {
+            unProducto.setDescuento(0.10);
+            aplicarDescuento = total * unProducto.getDescuento();
+            descuentoAplicado = total - aplicarDescuento;
+        }
+        else if (unProducto.getTipoPago().equals("Tarjeta Credito")){
+            unProducto.setDescuento(0.15);
+            aplicarDescuento = total * unProducto.getDescuento();
+            descuentoAplicado = total + aplicarDescuento;
+        }
+        else if (unProducto.getTipoPago().equals("Tarjeta Debito")){
+            unProducto.setDescuento(0.10);
+            aplicarDescuento = total * unProducto.getDescuento();
+            descuentoAplicado = total - aplicarDescuento;
+        }
+        else if (unProducto.getTipoPago().equals("MercadoPago")) {
+            unProducto.setDescuento(0.20);
+            aplicarDescuento = total * unProducto.getDescuento();
+            descuentoAplicado = total + aplicarDescuento;
+        }
+        else {
+            descuentoAplicado=(float)total;
+        }
+        return descuentoAplicado;
+    }
+
+    public static Carrito<Compra> cancelarCompra(){
         return new Carrito<>();
-     }
+    }
 
     public static Carrito<Compra> realizarCompra(Supermercado supermercado, Carrito<Compra> carrito){
         Compra compraProducto;
@@ -626,23 +625,23 @@ public class Main {
     }
 
     public static void comentar(Supermercado mercado){
-	int i;
-	String nombre, comentario;
-	System.out.println("ingrese el nombre del producto");
-	nombre = scanner.nextLine();
-	i = mercado.buscarProductoNombre(nombre);
-	if (i < 0){
-        System.out.println("ERROR, EL PRODUCTO NO EXISTE O FUE DADO DE BAJA...");
-    }
-	else{
-        System.out.println("Deje su comentario");
-        comentario=scanner.nextLine();
-        mercado.dejarUnComentario(comentario, i);
+        int i;
+        String nombre, comentario;
+        System.out.println("ingrese el nombre del producto");
+        nombre = scanner.nextLine();
+        i = mercado.buscarProductoNombre(nombre);
+        if (i < 0){
+            System.out.println("ERROR, EL PRODUCTO NO EXISTE O FUE DADO DE BAJA...");
+        }
+        else{
+            System.out.println("Deje su comentario");
+            comentario=scanner.nextLine();
+            mercado.dejarUnComentario(comentario, i);
+        }
+
     }
 
 }
 
-}
-    
-   
+
 
