@@ -19,6 +19,7 @@ public class Main {
         Supermercado superMerca = new Supermercado("La Super Merca");
         lee (lye, superMerca);
         cargarAdmins(superMerca);
+        System.out.println("commit");
         System.out.println("SuperMercado " + superMerca.getNombreSupermercado());
         Usuario usr = Login(superMerca);
         Carrito<Compra>compra;
