@@ -98,7 +98,7 @@ public class Supermercado {
         StringBuilder sb = new StringBuilder();
         for (Producto producto : listadoProductos){
             if (producto.isActivo()){
-                sb.append(producto);
+                sb.append(producto.muestraProducto());
                 sb.append("\n");
             }
         }
@@ -109,7 +109,7 @@ public class Supermercado {
         StringBuilder sb = new StringBuilder();
         for (Producto producto : listadoProductos){
             if (producto.isActivo() && producto.getStockProducto() > 0){
-                sb.append(producto);
+                sb.append(producto.muestraProducto());
                 sb.append("\n");
             }
         }
@@ -120,8 +120,21 @@ public class Supermercado {
         StringBuilder sb = new StringBuilder();
         for (Producto producto : listadoProductos){
             if (producto.getCategoria().equals(categoria)){
-                sb.append(producto);
+                sb.append(producto.muestraProducto());
                 sb.append("\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    public String muestraProductosPorCategoriaCliente (String categoria){
+        StringBuilder sb = new StringBuilder();
+        for (Producto producto : listadoProductos){
+            if (producto.getCategoria().equals(categoria)){
+                if (producto.isActivo() && producto.getStockProducto() > 0){
+                    sb.append(producto.muestraProducto());
+                    sb.append("\n");
+                }
             }
         }
         return sb.toString();

@@ -1,81 +1,54 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Compra{
-	private Producto producto;
+
+	private String nombreProductoC;
+	private String marcaProductoC;
+	private String categoriaProductoC;
+	private double precioProductoC;
 	private int cantidad;
 	private double precioTotal;
 
 	public Compra() {
 
 	}
-
 	/**
 	 * @param producto
 	 * @param cantidad
 	 * @param precioTotal
 	 */
 	public Compra(Producto producto, int cantidad, double precioTotal) {
-
-		this.producto = producto;
+		nombreProductoC = producto.getNombreProducto();
+		marcaProductoC = producto.getMarcaProducto();
+		categoriaProductoC = producto.getCategoria();
+		precioProductoC = producto.getPrecioProducto();
 		this.cantidad = cantidad;
 		this.precioTotal = precioTotal;
 	}
-
-	public Producto buscarPorNombre(String nombreProducto, Supermercado mercado)
-	{
-
-		int i=0;
-		int flag=-1;
-		
-		Producto unProducto;
-		unProducto=null;
-		
-		while(i<mercado.getListadoProductos().size()&& flag==-1)
-		{
-
-			unProducto= mercado.getListadoProductos().get(i);
-           
-			if(unProducto.getNombreProducto().equals(nombreProducto))
-			{
-
-				flag=1;
-
-			}
-			else
-			{
-				i++;
-			}
-		}
-		
-		return unProducto;
-	}
-	///eliminar un producto que se agrego a la compra por error
-	/*public int  eliminar(int idProducto)
-	{
-		int flag=-1;
-		int borrar=0;
-		borrar= buscarPorId(idProducto);
-		if(borrar==1)
-		{
-			listaCompras.remove(borrar);
-			flag=1;
-		}
-		return flag;
-	}
-*/
 	/**
 	 * @return the producto
 	 */
-	public Producto getProducto() {
-		return producto;
+	public String getProducto() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(nombreProductoC + " ");
+		sb.append(marcaProductoC + " ");
+		sb.append(categoriaProductoC + " ");
+		sb.append(precioProductoC + " ");
+		return sb.toString();
 	}
 	/**
 	 * @param producto the producto to set
 	 */
 	public void setProducto(Producto producto) {
-		this.producto = producto;
+
+		nombreProductoC = producto.getNombreProducto();
+		marcaProductoC = producto.getMarcaProducto();
+		categoriaProductoC = producto.getCategoria();
+		precioProductoC = producto.getPrecioProducto();
+
 	}
 	/**
 	 * @return the cantidad
@@ -102,12 +75,6 @@ public class Compra{
 		this.precioTotal = precioTotal;
 	}
 
-	@Override
-	public String toString() {
-		return getProducto() + "Cantidad: " + getCantidad() + " Precio: " + getPrecioTotal();
-	}
-
-	///Precio del total
 	public void precioTotal(double precioProducto , int cantidad)
 	{
 		precioTotal = precioProducto * cantidad;
@@ -121,6 +88,18 @@ public class Compra{
 			}
 		}
 		return aux;
+	}
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Nombre: " + nombreProductoC + ", ");
+		sb.append("Marca: " + marcaProductoC + ", ");
+		sb.append("Categoria: " + categoriaProductoC + ", ");
+		sb.append("Precio: " + precioProductoC + ", ");
+		//sb.append("\t");
+		sb.append("Cantidad: " + cantidad + ", ");
+		sb.append("Precio: " + precioTotal);
+		return sb.toString();
 	}
 
 }

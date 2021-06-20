@@ -130,8 +130,7 @@ public class Producto implements ICategoria {
         isActivo = activo;
     }
 
-    @Override
-    public String toString() {
+    public String muestraProducto() {
         StringBuilder sb = new StringBuilder();
         sb.append("[ID: " + getIdProducto() + ", ");
         sb.append("Nombre: " + getNombreProducto() + ", ");
@@ -141,6 +140,16 @@ public class Producto implements ICategoria {
         sb.append("Comentario: " + getComentario() + ", ");
         sb.append("Categoria: " + getCategoria());
         sb.append("]" + "\n");
+        return sb.toString();
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[Nombre: " + getNombreProducto() + ", ");
+        sb.append("Marca: " + getMarcaProducto() + ", ");
+        sb.append("Precio:$ " + getPrecioProducto() + ", ");
+        sb.append("Categoria: " + getCategoria());
+        sb.append("]");
         return sb.toString();
     }
 }

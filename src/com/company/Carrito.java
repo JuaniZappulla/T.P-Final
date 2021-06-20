@@ -3,27 +3,33 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.Objects;
 
 
 public class Carrito<T>extends Compra{
- 
+
  	private int idCarrito;
-	private static int id = 0;
+	private static int id = -1;
  	private Date fecha;
  	private String tipoPago;
  	private boolean isPago;
  	private float descuento;
 	private ArrayList<T>lista;
+	private double precioTotalCompra;
 	
 	public Carrito() {
-		lista = new ArrayList<T>();
 		idCarrito = ++id;
+		lista = new ArrayList<T>();
 		fecha = new Date();
 	}
 
-	
+	public double getPrecioTotalCompra() {
+		return precioTotalCompra;
+	}
 
+	public void setPrecioTotalCompra(double precioTotal) {
+		this.precioTotalCompra = precioTotal;
+	}
 
 	/**
 	 * @return the idCarrito
@@ -113,7 +119,7 @@ public class Carrito<T>extends Compra{
 	}
 
 	//permite mostrar el carrito completo
- 
+
 	public String mostrarCarrito() {
 			StringBuilder builder = new StringBuilder();
 			for (int i = 0; i < lista.size(); i++) {
@@ -122,42 +128,17 @@ public class Carrito<T>extends Compra{
 			return builder.toString();
 		}
 
-	//obtener el total a pagar con el descuento
-
-	/*public double getPrecioTotalConDescuento() {
-		 double total=0;
-		 float aplicarDescuento=0;
-		Compra aux= new Compra();
-		 for (int i=0;i< lista.size();i++)
-		 {
-          
-			 System.out.println("ddddd"+lista.toString());
-			
-			total+=lista.get(i);
-            
-		 }
-		 if (getTipoPago()=="efectivo")
-		 {
-			 aplicarDescuento=(float)total*getDescuento();
-
-		 }
-		 else {
-			 aplicarDescuento=(float)total;
-		 }
-
-		 return aplicarDescuento;
-	 }
-*/
-
 	@Override
 	public String toString() {
-		return "Carrito{" +
-				"idCarrito=" + idCarrito +
-				", fecha=" + fecha +
-				", tipoPago='" + tipoPago + '\'' +
-				", isPago=" + isPago +
-				", descuento=" + descuento + "\n" +
-				"productos=" + mostrarCarrito() +
-				'}';
+		StringBuilder sb = new StringBuilder();
+		sb.append("ID CARRITO: " + idCarrito +  ", ");
+		sb.append("FECHA: " + fecha + ", ");
+		sb.append("TIPO DE PAGO: " + tipoPago + ", ");
+		sb.append("DESCUENTO: " + descuento + "\n");
+		sb.append("PRODUCTOS: "  + "\n" + mostrarCarrito());
+		sb.append("TOTAL COMPRA: " + precioTotalCompra);
+		sb.append("\n");
+		return sb.toString();
 	}
+
 }

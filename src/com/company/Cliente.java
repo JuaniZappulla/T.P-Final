@@ -5,7 +5,7 @@ import Interface.ICategoria;
 
 import java.io.Serializable;
 import java.util.HashMap;
-
+import java.util.Map;
 
 
 public class Cliente extends Usuario implements Serializable, ICategoria {
@@ -15,13 +15,10 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
     private String localidadCliente;
     private boolean isActivo;
     private String categoria;
-    private int idCarrito;
-    private static int id = 0;
 
     public Cliente() {
         setId(getId());
         historialCompras = new HashMap<>();
-        idCarrito = ++id;
     }
 
     public Cliente(String nombre, String apellido, String dni, String usuario, String contrasena, String mailCliente, String localidadCliente, Boolean isActivo, String categoria) {
@@ -32,7 +29,6 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
         this.localidadCliente = localidadCliente;
         this.isActivo = isActivo;
         setCategoria(categoria);
-        idCarrito = ++id;
     }
 
     public HashMap<Integer, Carrito<Compra>> getHistorialCompras() {
@@ -94,21 +90,18 @@ public class Cliente extends Usuario implements Serializable, ICategoria {
         return sb.toString();
     }
 
-    public void agregarHistorial(Carrito<Compra> lacompra){
-    	/*
-        System.out.println("pppppppppppppppppppppppppppppppppppppppppppppppppp"+ lacompra.getIdCarrito());
-       if(historialCompras.containsKey(lacompra.getIdCarrito()))
-    	 {
-    	  System.out.println("no se puede agregar");///borrar
-    	  }
-       else
-       {
-    	   historialCompras.put(lacompra.getIdCarrito(), lacompra);
-
-    	   System.out.println("ingresa???????");
-       }
-        */
-        historialCompras.put(idCarrito, lacompra);
+    public String muestraHistorialCompras (){
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Integer, Carrito<Compra>> integerCarritoEntry : historialCompras.entrySet()) {
+            sb.append(((Map.Entry) integerCarritoEntry).getValue());
+            sb.append("\n");
         }
+        return sb.toString();
+    }
+    public void agregarHistorial(Carrito<Compra> laCompra){
+
+        int idtotal = laCompra.getIdCarrito();
+        historialCompras.put(idtotal, laCompra);
+    }
 
 }

@@ -1,17 +1,19 @@
 package com.company;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import org.json.*;
+
 import java.io.*;
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 import java.util.*;
 
 public class lecturaEscritura {
 
-    private File fileClient = new File ("clientes.json");
-    private File fileProduct = new File ("productos.json");
+    private final File fileClient = new File ("clientes.json");
+    private final File fileProduct = new File ("productos.json");
 
-    public void grabaClientes (LinkedHashSet<Usuario> clientes, Supermercado mercado){
+    public void grabaClientes (LinkedHashSet<Usuario> clientes){
         LinkedHashSet<Cliente> clientesAux = new LinkedHashSet<>();
         try {
             BufferedWriter escritura = new BufferedWriter(new FileWriter(fileClient));
@@ -45,7 +47,7 @@ public class lecturaEscritura {
         return usuarios;
     }
 
-    public void grabaProductos (ArrayList<Producto> listadoProductos, Supermercado mercado){
+    public void grabaProductos (ArrayList<Producto> listadoProductos){
         try {
             BufferedWriter escritura = new BufferedWriter(new FileWriter(fileProduct));
             Gson gson = new Gson();
