@@ -9,15 +9,15 @@ import java.util.Objects;
 
 public class Carrito<T>extends Compra{
 
-	private int idCarrito;
+ 	private int idCarrito;
 	private static int id = -1;
-	private Date fecha;
-	private String tipoPago;
-	private boolean isPago;
-	private double descuento;
+ 	private Date fecha;
+ 	private String tipoPago;
+ 	private boolean isPago;
+ 	private double descuento;
 	private ArrayList<T>lista;
 	private double precioTotalCompra;
-
+	
 	public Carrito() {
 		idCarrito = ++id;
 		lista = new ArrayList<T>();
@@ -66,7 +66,7 @@ public class Carrito<T>extends Compra{
 	public double getDescuento() {
 		return descuento;
 	}
-
+	
 
 	/**
 	 * @param idCarrito the idCarrito to set
@@ -110,10 +110,10 @@ public class Carrito<T>extends Compra{
 		return lista;
 	}
 
-	public void agregarCarrito(T compra)
-	{
-		lista.add(compra);
-	}
+	 public void agregarCarrito(T compra)
+	 {
+		 lista.add(compra);
+	 }
 
 	public void setLista(ArrayList<T> lista) {
 		this.lista = lista;
@@ -122,12 +122,12 @@ public class Carrito<T>extends Compra{
 	//permite mostrar el carrito completo
 
 	public String mostrarCarrito() {
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < lista.size(); i++) {
-			builder.append(lista.get(i).toString() + "\n");
+			StringBuilder builder = new StringBuilder();
+			for (int i = 0; i < lista.size(); i++) {
+					builder.append(lista.get(i).toString() + "\n");
+			}
+			return builder.toString();
 		}
-		return builder.toString();
-	}
 
 	@Override
 	public String toString() {
