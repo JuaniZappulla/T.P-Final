@@ -86,15 +86,17 @@ public class Compra{
 		precioTotal = precioProducto * cantidad;
 	}
 
+	/*
 	public Producto buscaUnProducto (String nombreProducto, Supermercado mercado){
 		Producto aux = new Producto();
 		for (Producto producto : mercado.getListadoProductos()){
-			if (producto.getNombreProducto().equals(nombreProducto)){
+			if (producto.getNombreProducto().equals(nombreProducto) && producto.isActivo()){
 				aux = producto;
 			}
 		}
 		return aux;
 	}
+	*/
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
