@@ -7,7 +7,6 @@ import java.text.DecimalFormat;
 import java.util.Scanner;
 
 
-
 public class Main {
 
     public static Scanner scanner;
@@ -19,13 +18,9 @@ public class Main {
         Supermercado superMerca = new Supermercado("La Super Merca");
         lee (lye, superMerca);
         cargarAdmins(superMerca);
-        System.out.println("commit");
         System.out.println("SuperMercado " + superMerca.getNombreSupermercado());
-        System.out.println("Bien venido");
-        
         Usuario usr = Login(superMerca);
         Carrito<Compra>compra;
-
            if (usr instanceof Admin) {
                do {
                    menuAdmin();
@@ -191,7 +186,7 @@ public class Main {
         System.out.println("Login");
         System.out.println("Usuario");
         usuario = scanner.nextLine();
-        System.out.println("ContraseÃ±a");
+        System.out.println("Contraseña");
         contrasena = scanner.nextLine();
         usr = mercado.buscarUsuarioLogin(usuario, contrasena);
         if (usr != null) {
@@ -204,7 +199,7 @@ public class Main {
             System.out.println("Logeado con exito!");
             System.out.println("Bienvenido " + usr.getNombre());
         } else {
-            System.out.println("Usuario o ContraseÃ±a incorrectos!!");
+            System.out.println("Usuario o Contraseña incorrectos!!");
             do {
                 System.out.println("Desea crear un nuevo usuario? S/N");
                 opc = scanner.nextLine().charAt(0);
@@ -253,7 +248,7 @@ public class Main {
                 cliente.setUsuario(usuario);
             }
         }while (mercado.buscarPorNombreUsuarioLogin(usuario));
-        System.out.println("contraseÃ±a: ");
+        System.out.println("contraseña: ");
         cliente.setContrasena(scanner.nextLine());
         cliente.setActivo(true);
         return cliente;
@@ -334,7 +329,7 @@ public class Main {
         idProducto = scanner.nextInt();
         flag = mercado.BuscaProducto(idProducto);
         if (!flag){
-            System.out.println("ERROR, ID INCORRECTO O SE DESACTIVÃƒâ€œ EL PRODUCTO");
+            System.out.println("ERROR, ID INCORRECTO O SE DESACTIVÓ EL PRODUCTO");
         }
         else{
             System.out.println("Ingrese cantidad para reestockear");
@@ -356,7 +351,7 @@ public class Main {
         idProducto = scanner.nextInt();
         flag = mercado.bajaDeProducto(idProducto);
         if (!flag){
-            System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÃƒï¿½ DESACTIVADO");
+            System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÁ DESACTIVADO");
         }
         else{
             System.out.println("PRODUCTO DADO DE BAJA CON EXITO");
@@ -373,7 +368,7 @@ public class Main {
             idProducto = scanner.nextInt();
             flag = mercado.altaDeProducto(idProducto);
             if (!flag) {
-                System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÃƒï¿½ DADO DE ALTA");
+                System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÁ DADO DE ALTA");
             } else {
                 System.out.println("PRODUCTO DADO DE ALTA CON EXITO");
             }
@@ -390,7 +385,7 @@ public class Main {
         dni = scanner.nextLine();
         flag = mercado.bajaDeCliente(dni);
         if (!flag){
-            System.out.println("ERROR, EL CLIENTE NO SE ENCUENTRA O YA ESTÃƒï¿½ DADO DE BAJA");
+            System.out.println("ERROR, EL CLIENTE NO SE ENCUENTRA O YA ESTÁ DADO DE BAJA");
         }
         else{
             System.out.println("CLIENTE DADO DE BAJA CON EXITO");
@@ -404,7 +399,7 @@ public class Main {
         dni = scanner.nextLine();
         flag = mercado.bajaDeCliente(dni);
         if (!flag){
-            System.out.println("ERROR, EL CLIENTE NO SE ENCUENTRA O YA ESTA DADO DE BAJA");
+            System.out.println("ERROR, EL CLIENTE NO SE ENCUENTRA O YA ESTÁ DADO DE BAJA");
         }
         else{
             System.out.println("CLIENTE DADO DE BAJA CON EXITO");
@@ -424,7 +419,7 @@ public class Main {
             dni = scanner.nextLine();
             flag = mercado.altaDeCliente(dni);
             if (!flag){
-                System.out.println("ERROR, EL USUARIO NO SE ENCUENTRA O YA ESTÃ� DADO DE ALTA");
+                System.out.println("ERROR, EL CLIENTE NO SE ENCUENTRA O YA ESTÁ DADO DE ALTA");
             }
             else{
                 System.out.println("USUARIO DADO DE ALTA CON EXITO");
@@ -619,7 +614,7 @@ public class Main {
                     } while (mercado.buscarPorNombreUsuarioLogin(usuario));
                     break;
                 case 8:
-                    System.out.println("contraseÃ±a: ");
+                    System.out.println("contraseña: ");
                     usr.setContrasena(scanner.nextLine());
                     ((Cliente) usr).setActivo(true);
                     break;
@@ -643,20 +638,6 @@ public class Main {
     }
 
 }
-    public static void iniciar(Supermercado us)
-    {
-    	int num=0;
-    	System.out.println("1).iniciar secion\n 2).registrarce");
-    	num=scanner.nextInt();
-    	if(num==1)
-    	{
-    		Login(us);
-    	}
-    	else if(num==2)
-    	{
-    		Login(us);
-    	}
-    }
 
 }
     
