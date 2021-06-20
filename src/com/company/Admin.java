@@ -30,4 +30,5 @@ public class Admin extends Usuario implements Serializable {
         sb.append("Cargo: " + cargo);
         return sb.toString();
     }
+
 }

@@ -1,9 +1,6 @@
 package com.company;
 
-import java.math.BigInteger;
 import java.util.*;
-
-
 
 public class Supermercado {
     private String nombreSupermercado;
@@ -143,7 +140,7 @@ public class Supermercado {
     public String buscaUnSoloProducto (String nombreProducto){
         StringBuilder sb = new StringBuilder();
         for (Producto producto : listadoProductos){
-            if (producto.getNombreProducto().equals(nombreProducto)){
+            if (producto.getNombreProducto().equals(nombreProducto) && producto.isActivo()){
                 sb.append(producto);
             }
         }
@@ -265,41 +262,26 @@ public class Supermercado {
         return flag;
     }
 
-    public int buscarProductoNombre(String nombreProducto, Supermercado mercado)
-	{
-
-		int i=0;
-		int flag=-1;
-		
-		Producto unProducto= new Producto();
-		unProducto=null;
-		
-		while(i<mercado.getListadoProductos().size()&& flag==-1)
-		{
-
-			unProducto= mercado.getListadoProductos().get(i);
-           
-			if(unProducto.getNombreProducto().equals(nombreProducto))
-			{
-
-				flag=i;
-
+    public int buscarProductoNombre(String nombreProducto) {
+		int i=0, encontrado =-1;
+		boolean flag = false;
+		Producto unProducto;
+		while(i<listadoProductos.size() && !flag){
+			unProducto = listadoProductos.get(i);
+			if(unProducto.getNombreProducto().equals(nombreProducto) && unProducto.isActivo()) {
+				flag = true;
+                encontrado = i;
 			}
-			else
-			{
+			else{
 				i++;
 			}
 		}
-		
-		return flag;
+		return encontrado;
 	}
 
-    public void dejarUnComentario(String nombre, Supermercado mercado,String comentario)
+    public void dejarUnComentario(String comentario, int i)
     {
-    	int i=buscarProductoNombre(nombre, mercado);
-    	
-       listadoProductos.get(i).setComentario(comentario);
-
+        listadoProductos.get(i).setComentario(comentario);
     }
 
     public boolean controlStrockProducto (int idProducto, int cantidad) {

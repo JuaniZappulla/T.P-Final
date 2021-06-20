@@ -1,5 +1,6 @@
 package com.company;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -39,6 +40,7 @@ public class Compra{
 		sb.append(precioProductoC + " ");
 		return sb.toString();
 	}
+
 	/**
 	 * @param producto the producto to set
 	 */
@@ -50,24 +52,28 @@ public class Compra{
 		precioProductoC = producto.getPrecioProducto();
 
 	}
+
 	/**
 	 * @return the cantidad
 	 */
 	public int getCantidad() {
 		return cantidad;
 	}
+
 	/**
 	 * @param cantidad the cantidad to set
 	 */
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+
 	/**
 	 * @return the precioTotal
 	 */
 	public double getPrecioTotal() {
 		return precioTotal;
 	}
+
 	/**
 	 * @param precioTotal the precioTotal to set
 	 */
@@ -92,13 +98,13 @@ public class Compra{
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		DecimalFormat formato = new DecimalFormat("#.##");
 		sb.append("Nombre: " + nombreProductoC + ", ");
 		sb.append("Marca: " + marcaProductoC + ", ");
 		sb.append("Categoria: " + categoriaProductoC + ", ");
-		sb.append("Precio: " + precioProductoC + ", ");
-		//sb.append("\t");
+		sb.append("Precio: $" + formato.format(precioProductoC) + ", ");
 		sb.append("Cantidad: " + cantidad + ", ");
-		sb.append("Precio: " + precioTotal);
+		sb.append("Precio Final: $" + formato.format(precioTotal));
 		return sb.toString();
 	}
 

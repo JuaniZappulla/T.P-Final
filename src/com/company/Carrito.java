@@ -1,6 +1,7 @@
 package com.company;
 
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -13,7 +14,7 @@ public class Carrito<T>extends Compra{
  	private Date fecha;
  	private String tipoPago;
  	private boolean isPago;
- 	private float descuento;
+ 	private double descuento;
 	private ArrayList<T>lista;
 	private double precioTotalCompra;
 	
@@ -62,7 +63,7 @@ public class Carrito<T>extends Compra{
 	/**
 	 * @return the descuento
 	 */
-	public float getDescuento() {
+	public double getDescuento() {
 		return descuento;
 	}
 	
@@ -98,7 +99,7 @@ public class Carrito<T>extends Compra{
 	/**
 	 * @param descuento the descuento to set
 	 */
-	public void setDescuento(float descuento) {
+	public void setDescuento(double descuento) {
 		this.descuento = descuento;
 	}
 
@@ -131,12 +132,18 @@ public class Carrito<T>extends Compra{
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		DecimalFormat formato = new DecimalFormat("#.##");
 		sb.append("ID CARRITO: " + idCarrito +  ", ");
 		sb.append("FECHA: " + fecha + ", ");
 		sb.append("TIPO DE PAGO: " + tipoPago + ", ");
-		sb.append("DESCUENTO: " + descuento + "\n");
+		if (getTipoPago().equals("Efectivo")){
+			sb.append("DESCUENTO: " + descuento + "\n");
+		}
+		else{
+			sb.append("INCREMENTO: " + descuento + "\n");
+		}
 		sb.append("PRODUCTOS: "  + "\n" + mostrarCarrito());
-		sb.append("TOTAL COMPRA: " + precioTotalCompra);
+		sb.append("TOTAL COMPRA: $" + formato.format(precioTotalCompra) );
 		sb.append("\n");
 		return sb.toString();
 	}

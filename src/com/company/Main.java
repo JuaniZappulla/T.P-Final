@@ -1,7 +1,9 @@
 package com.company;
 
 import exceptions.CargaProductoException;
+import jdk.swing.interop.SwingInterOpUtils;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 
@@ -15,12 +17,11 @@ public class Main {
         scanner = new Scanner(System.in);
         lecturaEscritura lye = new lecturaEscritura();
         Supermercado superMerca = new Supermercado("La Super Merca");
-        superMerca.setUsuarios(lye.leeClientes());
-        superMerca.setListadoProductos(lye.leeProductos());
+        lee (lye, superMerca);
         cargarAdmins(superMerca);
         System.out.println("SuperMercado " + superMerca.getNombreSupermercado());
         Usuario usr = Login(superMerca);
-        Carrito<Compra>compra = new Carrito<>();
+        Carrito<Compra>compra;
 
            if (usr instanceof Admin) {
                do {
@@ -69,7 +70,6 @@ public class Main {
                } while (opc != 0);
            } else if (usr instanceof Cliente) {
                do {
-                   //compra = new Carrito<>();
                    menuCliente();
                    opc = scanner.nextInt();
                    scanner.nextLine();
@@ -94,42 +94,49 @@ public class Main {
                                        muestraPorCategoria(superMerca);
                                        break;
                                    case 3:
-                                       compra = realizarCompra(superMerca, compra);
+                                        muestraProducto(superMerca);
                                        break;
                                    case 4:
-                                       System.out.println(compra);
+                                       compra = realizarCompra(superMerca, compra);
                                        break;
                                    case 5:
+                                       System.out.println(compra);
+                                       break;
+                                   case 6:
                                        finCompra(compra);
                                        ((Cliente) usr).agregarHistorial(compra);
                                        compra = new Carrito<>();
                                        break;
-                                   case 6:
+                                   case 7:
                                        compra = cancelarCompra();
                                        System.out.println("COMPRA CANCELADA");
                                        break;
-                                   case 7:
+                                   case 8:
                                        System.out.println(((Cliente) usr).muestraHistorialCompras());
                                        break;
                                }
                            } while (opcCompra != 0);
                            break;
                        case 4:
-                           bajaCliente(superMerca);
+                           bajaClienteCliente (superMerca, lye);
                            break;
                        case 5:
-                           System.out.println("INGRESE EL PRODUCTO A BUSCAR:");
-                           String nombre = scanner.nextLine();
-                           System.out.println(superMerca.buscaUnSoloProducto(nombre));
-                           break;
-                       case 6:
                            comentar(superMerca);
                            break;
                    }
                } while (opc != 0);
            }
+            graba(lye, superMerca);
+    }
+
+    public static void graba(lecturaEscritura lye, Supermercado superMerca){
         lye.grabaClientes(superMerca.getUsuarios());
         lye.grabaProductos(superMerca.getListadoProductos());
+    }
+
+    public static void lee (lecturaEscritura lye, Supermercado superMerca){
+        superMerca.setUsuarios(lye.leeClientes());
+        superMerca.setListadoProductos(lye.leeProductos());
     }
 
     public static void menuAdmin (){
@@ -154,8 +161,7 @@ public class Main {
         System.out.println("1. MODIFICAR DATOS PERSONALES");
         System.out.println("2. VER CLIENTE ACTUAL");
         System.out.println("3. COMPRAR");
-        System.out.println("4. DAR DEBAJA LA CUENTA");
-        System.out.println("5. BUSCAR UN PRODUCTO EN ESPECIFICO");
+        System.out.println("4. DAR DE BAJA LA CUENTA");
         System.out.println("6. DEJAR UN COMENTARIO DEL PRODUCTO");
         System.out.println("0. SALIR");
         System.out.println("SELECCIONE UNA OPCION: ");
@@ -165,11 +171,12 @@ public class Main {
         System.out.println("MENU COMPRA");
         System.out.println("1. VER LISTA PRODUCTOS");
         System.out.println("2. VER LISTA DE PRODUCTOS POR CATEGORIA");
-        System.out.println("3. CARGAR PRODUCTO AL CARRITO");
-        System.out.println("4. VER CARRITO");
-        System.out.println("5. FINALIZAR PEDIDO");
-        System.out.println("6. CANCELAR PEDIDO");
-        System.out.println("7. VER HISTORIAL DE COMPRA");///SE PODRIA MODIFICAR
+        System.out.println("3. VER UN PRODUCTO");
+        System.out.println("4. CARGAR PRODUCTO AL CARRITO");
+        System.out.println("5. VER CARRITO");
+        System.out.println("6. FINALIZAR PEDIDO");
+        System.out.println("7. CANCELAR PEDIDO");
+        System.out.println("8. VER HISTORIAL DE COMPRA");///SE PODRIA MODIFICAR
         System.out.println("0. ATRAS");
         System.out.println("SELECCIONE UNA OPCION: ");
     }
@@ -185,6 +192,12 @@ public class Main {
         contrasena = scanner.nextLine();
         usr = mercado.buscarUsuarioLogin(usuario, contrasena);
         if (usr != null) {
+            if (usr instanceof Cliente){
+                if (!((Cliente) usr).getActivo()){
+                    System.out.println("EL CLIENTE ESTÁ DADO DE BAJA");
+                    System.exit(1);
+                }
+            }
             System.out.println("Logeado con exito!");
             System.out.println("Bienvenido " + usr.getNombre());
         } else {
@@ -275,13 +288,26 @@ public class Main {
         System.out.println(mercado.muestraProductosPorCategoria(categoria));
     }
 
+    public static void muestraProducto(Supermercado mercado){
+        String nombre;
+        String producto;
+        System.out.println("INGRESE NOMBRE DEL PRODUCTO: ");
+        nombre = scanner.nextLine();
+        producto = mercado.buscaUnSoloProducto(nombre);
+        if (producto.length()>0){
+            System.out.println(producto);
+        }
+        else{
+            System.out.println("NO SE ENCUENTRA EL PRODUCTO O FUE DADO DE BAJA...");
+        }
+    }
+
     public static void muestraPorCategoriaCliente(Supermercado mercado){
         String categoria;
         System.out.println("INGRESE CATEGORIA: ");
         categoria = scanner.nextLine();
         System.out.println(mercado.muestraProductosPorCategoriaCliente(categoria));
     }
-
 
     public static void buscaUsuario(Supermercado mercado) {
         String usuario;
@@ -337,16 +363,20 @@ public class Main {
     public static void altaProducto (Supermercado mercado){
         int idProducto;
         boolean flag;
-        System.out.println("PRODUCTOS DADOS DE BAJA");
-        System.out.println(mercado.muestraDadosDeBajaProductos());
-        System.out.println("Ingrese id de producto: ");
-        idProducto = scanner.nextInt();
-        flag = mercado.altaDeProducto(idProducto);
-        if (!flag){
-            System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÃ� DADO DE ALTA");
+        if (mercado.muestraDadosDeBajaProductos().length()>0) {
+            System.out.println("PRODUCTOS DADOS DE BAJA");
+            System.out.println(mercado.muestraDadosDeBajaProductos());
+            System.out.println("Ingrese id de producto: ");
+            idProducto = scanner.nextInt();
+            flag = mercado.altaDeProducto(idProducto);
+            if (!flag) {
+                System.out.println("ERROR, EL PRODUCTO NO SE ENCUENTRA O YA ESTÃ� DADO DE ALTA");
+            } else {
+                System.out.println("PRODUCTO DADO DE ALTA CON EXITO");
+            }
         }
         else{
-            System.out.println("PRODUCTO DADO DE ALTA CON EXITO");
+            System.out.println("NO HAY PRODUCTOS DADOS DE BAJA");
         }
     }
 
@@ -364,46 +394,75 @@ public class Main {
         }
     }
 
+    public static void bajaClienteCliente (Supermercado mercado, lecturaEscritura lye){
+        String dni;
+        boolean flag;
+        System.out.println("Ingrese DNI de cliente: ");
+        dni = scanner.nextLine();
+        flag = mercado.bajaDeCliente(dni);
+        if (!flag){
+            System.out.println("ERROR, EL CLIENTE NO SE ENCUENTRA O YA ESTÁ DADO DE BAJA");
+        }
+        else{
+            System.out.println("CLIENTE DADO DE BAJA CON EXITO");
+            graba(lye, mercado);
+            System.exit(1);
+        }
+    }
+
     public static void altaCliente (Supermercado mercado){
         String dni;
         boolean flag;
-        System.out.println("CLIENTES DADOS DE BAJA");
-        System.out.println(mercado.muestraDadosDeBajaUsuarios());
-        System.out.println("Ingrese DNI de producto: ");
-        dni = scanner.nextLine();
-        flag = mercado.altaDeCliente(dni);
-        if (!flag){
-            System.out.println("ERROR, EL USUARIO NO SE ENCUENTRA O YA ESTÃ� DADO DE ALTA");
+
+        if (mercado.muestraDadosDeBajaUsuarios().length()>0){
+            System.out.println("CLIENTES DADOS DE BAJA");
+            System.out.println(mercado.muestraDadosDeBajaUsuarios());
+            System.out.println("Ingrese DNI del cliente: ");
+            dni = scanner.nextLine();
+            flag = mercado.altaDeCliente(dni);
+            if (!flag){
+                System.out.println("ERROR, EL USUARIO NO SE ENCUENTRA O YA ESTÁ DADO DE ALTA");
+            }
+            else{
+                System.out.println("USUARIO DADO DE ALTA CON EXITO");
+            }
         }
         else{
-            System.out.println("USUARIO DADO DE ALTA CON EXITO");
+            System.out.println("NO HAY CLIENTES DADOS DE BAJA");
         }
     }
 
     public static void finCompra(Carrito<Compra>carrito){
     	int tipoPago;
     	int aux;
+        DecimalFormat formato = new DecimalFormat("#.##");
     	do {
-    	System.out.println("seleccione el metodo de pago: 1) efectivo\n 2) tarjeta");
+    	System.out.println("seleccione el metodo de pago:\n 1. Efectivo\n 2. Tarjeta Credito\n 3. Tarjeta Debito\n 4. MercadoPago");
     	tipoPago=scanner.nextInt();
     	if(tipoPago==1)
     	{
-    		carrito.setTipoPago("efectivo");
+    		carrito.setTipoPago("Efectivo");
     	}
     	else if(tipoPago==2)
     	{
-    		carrito.setTipoPago("tarjeta");
+    		carrito.setTipoPago("Tarjeta Credito");
     	}
+    	else if(tipoPago==3){
+            carrito.setTipoPago("Tarjeta Debito");
+        }
+    	else if(tipoPago==4){
+            carrito.setTipoPago("MercadoPago");
+        }
     	else
     	{
-    		System.out.println("el tipo de pago es incorrecto, intente nuevamente");
+    		System.out.println("EL TIPO DE PAGO ES INCORRECTO, REINTENTE...");
     		tipoPago=0;
     	}
     	}while(tipoPago==0);
     	
     	
-    	System.out.println("el total a pagar es:" + PrecioTotalConDescuento(carrito));
-    	System.out.println("para realizar el pago precione 1, en caso contrario 2");
+    	System.out.println("EL TOTAL A PAGAR ES:" + formato.format(PrecioTotalConDescuento(carrito)));
+    	System.out.println("PARA REALIZAR EL PAGO PRESIONE 1, DE LO CONTRARIO PRESIONE 2: ");
     	aux=scanner.nextInt();
     	if(aux==1)
     	{
@@ -418,24 +477,38 @@ public class Main {
 
 	public static double PrecioTotalConDescuento(Carrito<Compra>unProducto) {
 		 double total=0;
-		 float aplicarDescuento=0;
-		 float descuentoAplicado=0;
+		 double aplicarDescuento=0;
+		 double descuentoAplicado=0;
 		 for (int i=0;i<unProducto.getLista().size();i++)
 		 {
 			 
 			total+=unProducto.getLista().get(i).getPrecioTotal();
           
 		 }
-		 if (unProducto.getTipoPago()=="efectivo")
+		 if (unProducto.getTipoPago().equals("Efectivo"))
 		 {
-			 unProducto.setDescuento((float) 0.10);
-			 aplicarDescuento=(float)total*unProducto.getDescuento();
-              descuentoAplicado=(float)total-aplicarDescuento;
+			 unProducto.setDescuento(0.10);
+			 aplicarDescuento = total * unProducto.getDescuento();
+			 descuentoAplicado = total - aplicarDescuento;
 		 }
+		 else if (unProducto.getTipoPago().equals("Tarjeta Credito")){
+             unProducto.setDescuento(0.15);
+             aplicarDescuento = total * unProducto.getDescuento();
+             descuentoAplicado = total + aplicarDescuento;
+         }
+		 else if (unProducto.getTipoPago().equals("Tarjeta Debito")){
+             unProducto.setDescuento(0.10);
+             aplicarDescuento = total * unProducto.getDescuento();
+             descuentoAplicado = total - aplicarDescuento;
+         }
+		 else if (unProducto.getTipoPago().equals("MercadoPago")) {
+             unProducto.setDescuento(0.20);
+             aplicarDescuento = total * unProducto.getDescuento();
+             descuentoAplicado = total + aplicarDescuento;
+         }
 		 else {
 			 descuentoAplicado=(float)total;
 		 }
-
 		 return descuentoAplicado;
 	 }
 
@@ -466,20 +539,20 @@ public class Main {
                         compraProducto.precioTotal(producto.getPrecioProducto(), cantidad);
                         compraProducto.setProducto(producto);
                         carrito.agregarCarrito(compraProducto);
-                        System.out.println("cargado con exito");
+                        System.out.println("cargado con exito!");
                     }
                     else{
-                        System.out.println("no ahi stock suficiente");
+                        System.out.println("NO HAY STOCK SUFICIENTE");
                     }
                 }
                 else{
-                    System.out.println("error, el producto fue dado de baja");
+                    System.out.println("ERROR, EL PRODUCTO FUE DADO DE BAJA");
                 }
             }
             else{
-                System.out.println("el producto elegido no existe");
+                System.out.println("EL PRODUCTO SELECCIONADO NO EXISTE");
             }
-            System.out.println("desea continuar: s/n ");
+            System.out.println("Desea continuar: S/N ");
             continuar= scanner.nextLine().charAt(0);
         }while(continuar == 's');
 
@@ -488,13 +561,14 @@ public class Main {
 
     public static void modificarDatos(Supermercado mercado, Usuario usr) {
         int opc;
-        System.out.println("seleccione el dato a modificar:");
-        System.out.println(" 1. nombre\n 2. apellido\n 3. dni\n 4. E-Mail\n 5.localidad\n 6.categoria\n 7. idUsuario\n 8.contraseña\n ELIJA UNA OPCION:");
-        opc = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("opcion elegida: "+opc);
         boolean flag = false;
-        String usuario;
+        do {
+            System.out.println("SELECCIONE EL DATO A MODIFICAR:");
+            System.out.println(" 1. nombre\n 2. apellido\n 3. dni\n 4. E-Mail\n 5. localidad\n 6. categoria\n 7. idUsuario\n 8. contraseña\n 0. Atras\nELIJA UNA OPCION:");
+            opc = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("OPCION ELEGIDA: " + opc);
+            String usuario;
             switch (opc) {
                 case 1:
                     System.out.println("Nombre: ");
@@ -512,11 +586,11 @@ public class Main {
                     do {
                         System.out.println("E-Mail");
                         ((Cliente) usr).setMailUsuario(scanner.nextLine());
-                        if (((Cliente) usr).getMailCliente().contains("@")){
+                        if (((Cliente) usr).getMailCliente().contains("@")) {
                             flag = true;
-                        }else{
+                        } else {
                             System.out.println("Error, mail no valido, reintente...");
-                         }
+                        }
                     } while (!flag);
                     break;
                 case 5:
@@ -539,22 +613,29 @@ public class Main {
                     } while (mercado.buscarPorNombreUsuarioLogin(usuario));
                     break;
                 case 8:
-                    System.out.println("contraseÃ±a: ");
+                    System.out.println("contraseña: ");
                     usr.setContrasena(scanner.nextLine());
                     ((Cliente) usr).setActivo(true);
                     break;
             }
+        }while (opc != 0);
     }
 
     public static void comentar(Supermercado mercado){
+	int i;
 	String nombre, comentario;
 	System.out.println("ingrese el nombre del producto");
-	nombre=scanner.nextLine();
-	
-	System.out.println("deje su comentario");
-	comentario=scanner.nextLine();
-	
-	mercado.dejarUnComentario(nombre, mercado, comentario);
+	nombre = scanner.nextLine();
+	i = mercado.buscarProductoNombre(nombre);
+	if (i < 0){
+        System.out.println("ERROR, EL PRODUCTO NO EXISTE O FUE DADO DE BAJA...");
+    }
+	else{
+        System.out.println("Deje su comentario");
+        comentario=scanner.nextLine();
+        mercado.dejarUnComentario(comentario, i);
+    }
+
 }
 
 }
