@@ -136,11 +136,16 @@ public class Carrito<T>extends Compra{
 		sb.append("ID CARRITO: " + idCarrito +  ", ");
 		sb.append("FECHA: " + fecha + ", ");
 		sb.append("TIPO DE PAGO: " + tipoPago + ", ");
-		if (getTipoPago().equals("Efectivo")){
-			sb.append("DESCUENTO: " + descuento + "\n");
+		if (tipoPago != null){
+			if (tipoPago.equals("Efectivo")){
+				sb.append("DESCUENTO: " + descuento + "\n");
+			}
+			else{
+				sb.append("INCREMENTO: " + descuento + "\n");
+			}
 		}
 		else{
-			sb.append("INCREMENTO: " + descuento + "\n");
+			sb.append("DESCUENTO: " + descuento + "\n");
 		}
 		sb.append("PRODUCTOS: "  + "\n" + mostrarCarrito());
 		sb.append("TOTAL COMPRA: $" + formato.format(precioTotalCompra) );

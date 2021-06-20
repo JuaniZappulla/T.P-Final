@@ -105,9 +105,9 @@ public class Main {
                                        System.out.println(compra);
                                        break;
                                    case 6:
-                                       finCompra(compra);
-                                       ((Cliente) usr).agregarHistorial(compra);
-                                       compra = new Carrito<>();
+                                       if (finCompra(compra, usr)){
+                                           compra = new Carrito<>();
+                                       }
                                        break;
                                    case 7:
                                        compra = cancelarCompra();
@@ -434,47 +434,55 @@ public class Main {
         }
     }
 
-    public static void finCompra(Carrito<Compra>carrito){
+    public static boolean finCompra(Carrito<Compra>carrito, Usuario usr){
     	int tipoPago;
     	int aux;
         DecimalFormat formato = new DecimalFormat("#.##");
-    	do {
-    	System.out.println("seleccione el metodo de pago:\n 1. Efectivo\n 2. Tarjeta Credito\n 3. Tarjeta Debito\n 4. MercadoPago");
-    	tipoPago=scanner.nextInt();
-    	if(tipoPago==1)
-    	{
-    		carrito.setTipoPago("Efectivo");
-    	}
-    	else if(tipoPago==2)
-    	{
-    		carrito.setTipoPago("Tarjeta Credito");
-    	}
-    	else if(tipoPago==3){
-            carrito.setTipoPago("Tarjeta Debito");
+
+        if (carrito.mostrarCarrito().length() > 0){
+            do {
+                System.out.println("seleccione el metodo de pago:\n 1. Efectivo\n 2. Tarjeta Credito\n 3. Tarjeta Debito\n 4. MercadoPago");
+                tipoPago=scanner.nextInt();
+                if(tipoPago==1)
+                {
+                    carrito.setTipoPago("Efectivo");
+                }
+                else if(tipoPago==2)
+                {
+                    carrito.setTipoPago("Tarjeta Credito");
+                }
+                else if(tipoPago==3){
+                    carrito.setTipoPago("Tarjeta Debito");
+                }
+                else if(tipoPago==4){
+                    carrito.setTipoPago("MercadoPago");
+                }
+                else
+                {
+                    System.out.println("EL TIPO DE PAGO ES INCORRECTO, REINTENTE...");
+                    tipoPago=0;
+                }
+            }while(tipoPago==0);
+
+            System.out.println("EL TOTAL A PAGAR ES:" + formato.format(PrecioTotalConDescuento(carrito)));
+            System.out.println("PARA REALIZAR EL PAGO PRESIONE 1, DE LO CONTRARIO PRESIONE 2: ");
+            aux=scanner.nextInt();
+            if(aux==1)
+            {
+                carrito.setPago(true);
+                carrito.setPrecioTotalCompra(PrecioTotalConDescuento(carrito));
+                ((Cliente) usr).agregarHistorial(carrito);
+                return true;
+            }
+            else
+            {
+                carrito.setPago(false);
+            }
         }
-    	else if(tipoPago==4){
-            carrito.setTipoPago("MercadoPago");
+        else{
+            System.out.println("ERROR, DEBE CARGAR PRODUCTOS PRIMERO");
         }
-    	else
-    	{
-    		System.out.println("EL TIPO DE PAGO ES INCORRECTO, REINTENTE...");
-    		tipoPago=0;
-    	}
-    	}while(tipoPago==0);
-    	
-    	
-    	System.out.println("EL TOTAL A PAGAR ES:" + formato.format(PrecioTotalConDescuento(carrito)));
-    	System.out.println("PARA REALIZAR EL PAGO PRESIONE 1, DE LO CONTRARIO PRESIONE 2: ");
-    	aux=scanner.nextInt();
-    	if(aux==1)
-    	{
-    		carrito.setPago(true);
-    		carrito.setPrecioTotalCompra(PrecioTotalConDescuento(carrito));
-    	}
-    	else
-    	{
-    		carrito.setPago(false);
-    	}
+        return false;
     }
 
 	public static double PrecioTotalConDescuento(Carrito<Compra>unProducto) {
@@ -529,30 +537,25 @@ public class Main {
             System.out.println("ingrese el producto que desee comprar:");
             nombreProducto= scanner.nextLine();
             compraProducto = new Compra();
-            producto = compraProducto.buscaUnProducto(nombreProducto, supermercado);
-            if(producto != null){
-                if (producto.isActivo()){
-                    System.out.println("indique la cantidad a comprar:");
-                    cantidad=scanner.nextInt();
-                    scanner.nextLine();
-                    controlStock = supermercado.controlStrockProducto(producto.getIdProducto(), cantidad);
-                    if(controlStock){
-                        compraProducto.setCantidad(cantidad);
-                        compraProducto.precioTotal(producto.getPrecioProducto(), cantidad);
-                        compraProducto.setProducto(producto);
-                        carrito.agregarCarrito(compraProducto);
-                        System.out.println("cargado con exito!");
-                    }
-                    else{
-                        System.out.println("NO HAY STOCK SUFICIENTE");
-                    }
+            producto = supermercado.buscarProducto(nombreProducto);
+            if(producto.getNombreProducto() != null){
+                System.out.println("indique la cantidad a comprar:");
+                cantidad=scanner.nextInt();
+                scanner.nextLine();
+                controlStock = supermercado.controlStrockProducto(producto.getIdProducto(), cantidad);
+                if(controlStock){
+                    compraProducto.setCantidad(cantidad);
+                    compraProducto.precioTotal(producto.getPrecioProducto(), cantidad);
+                    compraProducto.setProducto(producto);
+                    carrito.agregarCarrito(compraProducto);
+                    System.out.println("cargado con exito!");
                 }
                 else{
-                    System.out.println("ERROR, EL PRODUCTO FUE DADO DE BAJA");
+                    System.out.println("NO HAY STOCK SUFICIENTE");
                 }
             }
             else{
-                System.out.println("EL PRODUCTO SELECCIONADO NO EXISTE");
+                System.out.println("EL PRODUCTO SELECCIONADO NO EXISTE O FUE DADO DE BAJA");
             }
             System.out.println("Desea continuar: S/N ");
             continuar= scanner.nextLine().charAt(0);

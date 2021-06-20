@@ -147,6 +147,16 @@ public class Supermercado {
         return sb.toString();
     }
 
+    public Producto buscarProducto (String nombreProducto){
+        Producto aux = new Producto();
+        for (Producto producto : listadoProductos){
+            if (producto.getNombreProducto().equals(nombreProducto) && producto.isActivo()){
+                aux = producto;
+            }
+        }
+        return aux;
+    }
+
     public Usuario buscarUsuario (String dni){
         Usuario usr = null;
         for (Usuario usuarioAux : usuarios){
